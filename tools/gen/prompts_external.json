@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "view": "side profile view, full body, character facing RIGHT, feet on ground or hover shadow",
+    "canvas_hint": "512x512 or 768x768 PNG, solid dark purple #2a2438 or transparent background",
+    "game_import": "python tools/gen/import_ai_sprite.py --id <path> --flip-x (if faces left)",
+    "negative": "top-down view, bird eye view, overhead, isometric, front view, back view, blurry, smooth, realistic photo, 3d render, multiple characters, watermark, text, logo, UI frame, extra limbs, deformed hands, cropped, chibi bobblehead, same design repeated, high resolution, detailed painting, gradient shading, anti-aliasing, soft edges, illustration, concept art, 4k, hd pixel art, painterly, airbrush",
+    "style_base": "TRUE low-res pixel art, 64x64 sprite, maximum 16 colors, visible square pixels, NO smooth gradients, NO soft shading, SNES era RPG sprite, hard edges, 1px black outline, indexed color look"
+  },
+  "style_suffix": "",
+  "units": [
+    {
+      "id": "human/unit_0",
+      "name": "步兵 Infantry",
+      "palette": "human",
+      "style_note": "矮壮重装、剑盾、最「标准士兵」",
+      "prompt": "A pixel art game sprite of a STOUT medieval foot knight infantry. Side profile facing right. Short wide silhouette, blue steel plate armor #6B82B8, large round shield on left arm, long sword on right hand, closed helmet with visor slit, yellow star badge on chest plate, thick armored boots planted on ground. Heavy grounded warrior, not tall. Dark muted purple background."
+    },
+    {
+      "id": "human/unit_1",
+      "name": "火枪手 Musketeer",
+      "palette": "human",
+      "style_note": "高瘦、羽帽、长火枪，和步兵完全不同",
+      "prompt": "A pixel art game sprite of a TALL SLIM renaissance musketeer. Side profile facing right. Narrow silhouette, dark navy coat #4D6AA8, wide feathered musketeer hat, long matchlock musket held horizontally pointing right, leather bandolier, TWO yellow stars on collar (veteran rank). Elegant agile soldier, much taller and thinner than a knight. Dark muted purple background."
+    },
+    {
+      "id": "human/unit_2",
+      "name": "迫击炮 Mortar",
+      "palette": "human",
+      "style_note": "炮比人大，剪影是「武器」不是人",
+      "prompt": "A pixel art game sprite of a portable MORTAR ARTILLERY TEAM. Side profile facing right. DOMINANT silhouette is a wooden wheeled mortar cannon barrel pointing right (bigger than the soldier). Small brown-uniformed gunner crouching behind the cannon wheels. THREE gold stars painted on the cannon base. Military siege weapon focus, not a standing hero. Dark muted purple background."
+    },
+    {
+      "id": "human/unit_3",
+      "name": "弩手 Arbalest",
+      "palette": "human",
+      "style_note": "兜帽游侠、巨型弩，对空狙击手",
+      "prompt": "A pixel art game sprite of a hooded crossbow sniper arbalest. Side profile facing right. Gray leather armor, deep hood hiding face, OVERSIZED heavy crossbow mounted on shoulder pointing right (crossbow taller than torso), bolt loaded, quiver on back. Lean ranger posture, anti-air marksman vibe, completely different from musketeer and knight. Dark muted purple background."
+    },
+    {
+      "id": "human/unit_4",
+      "name": "牧师 Cleric",
+      "palette": "human",
+      "style_note": "白袍、光晕、无武器，支援法师感",
+      "prompt": "A pixel art game sprite of a holy cleric priest SUPPORT unit. Side profile facing right. Flowing white and gold robes #D9D9F2, soft golden halo ring above hood, large golden holy cross on chest, NO weapons, hands open in blessing gesture, gentle floating hem. Peaceful healer silhouette, clearly not a soldier. Subtle warm glow. Dark muted purple background."
+    },
+    {
+      "id": "fungus/unit_0",
+      "name": "毒菇 Toxic Mushroom",
+      "palette": "fungus",
+      "style_note": "紫帽绿斑、矮胖、毒物感",
+      "prompt": "A pixel art game sprite of a toxic purple mushroom creature. Side profile facing right. Bulbous purple cap #8A5CBF with bright green poison spots, thick short stem, angry tiny eyes near stem, dripping green toxin. Stationary plant monster, squat silhouette. Dark muted purple background."
+    },
+    {
+      "id": "fungus/unit_1",
+      "name": "孢子菇 Spore Mushroom",
+      "palette": "fungus",
+      "style_note": "喷孢子、伞盖开口、和毒菇形状不同",
+      "prompt": "A pixel art game sprite of a spore puffball mushroom shooter. Side profile facing right. Olive green round cap with OPEN rupture on top releasing green spore cloud puffs, taller thin stem than toxic mushroom, fungal cannon mouth on cap edge. Ranged fungus artillery style. Dark muted purple background."
+    },
+    {
+      "id": "fungus/unit_2",
+      "name": "菌毯菇 Carpet Mushroom",
+      "palette": "fungus",
+      "style_note": "极宽扁平帽、几乎无茎、铺地感",
+      "prompt": "A pixel art game sprite of a wide CARPET mushroom. Side profile facing right. VERY FLAT wide dark green cap spreading horizontally like a pancake (widest fungus), almost no visible stem, moss and mycelium threads hanging from cap edge. Ground-hugging aura plant, unique flat silhouette. Dark muted purple background."
+    },
+    {
+      "id": "fungus/unit_3",
+      "name": "麻痹菇 Paralyzer Mushroom",
+      "palette": "fungus",
+      "style_note": "棕帽电纹、触须、控制型",
+      "prompt": "A pixel art game sprite of a paralyzer mushroom. Side profile facing right. Brown cap #734028 with glowing yellow bioluminescent spots, electric purple tendrils curling from cap, lightning arc between tendrils, medium stem. Controller debuff fungus, distinct from purple toxic and green spore types. Dark muted purple background."
+    },
+    {
+      "id": "dragon/unit_0",
+      "name": "幼龙 Dragon Whelp",
+      "palette": "dragon",
+      "style_note": "小红龙、翼展、尾焰、灵活（你已有一张可参考）",
+      "prompt": "A pixel art game sprite of a SMALL agile dragon whelp. Side profile facing right. Bright red scales #D8572A, cream underbelly, bat wings half spread, small horns, fierce yellow eye, flame tip on tail, lightweight wyvern body, two legs and small arms. Cute but dangerous flyer. Dark muted purple background."
+    },
+    {
+      "id": "dragon/unit_1",
+      "name": "焰龙 Flame Drake",
+      "palette": "dragon",
+      "style_note": "中型、双足站立、喷火、比幼龙壮、像龙战士",
+      "prompt": "A pixel art game sprite of a MEDIUM bipedal FLAME DRAKE dragon warrior. Side profile facing right. Orange-red muscular body #E6641E, golden wing edges, stands upright on two powerful legs like a dragon knight, thick tail, breathing a cone of fire forward from open jaws, armored chest scales, MORE MASSIVE than a whelp but not a giant. Aggressive melee brawler silhouette. Dark muted purple background."
+    },
+    {
+      "id": "dragon/unit_2",
+      "name": "熔岩泰坦 Lava Titan",
+      "palette": "dragon",
+      "style_note": "巨型四足、岩浆裂纹、小翼、压迫感",
+      "prompt": "A pixel art game sprite of a HUGE lava titan dragon beast. Side profile facing right. Dark crimson rock-like body #B31A0D with glowing orange magma cracks, tiny vestigial wings, heavy quadruped stance, massive head low to ground, smoke from back, earthquake heavy tank silhouette. Largest and slowest dragon, completely different from small whelp and bipedal drake. Dark muted purple background."
+    },
+    {
+      "id": "silicon/unit_0",
+      "name": "晶核 Silicon Core",
+      "palette": "silicon",
+      "style_note": "发光六角核心、人形晶石、蓄力感",
+      "prompt": "A pixel art game sprite of a crystal silicon CORE golem. Side profile facing right. Cyan hexagonal torso #6FD3E7 with bright white energy core in chest, crystal shard limbs, geometric faceted head, charging glow particles. Sci-fi crystal humanoid, clean angular silhouette. Dark muted purple background."
+    },
+    {
+      "id": "silicon/unit_1",
+      "name": "晶刺 Silicon Spike",
+      "palette": "silicon",
+      "style_note": "白色尖刺、炮塔式、远程",
+      "prompt": "A pixel art game sprite of a white crystal SPIKE turret golem. Side profile facing right. Pale white crystal body #F5F9FF with sharp cyan glowing spike cannon arm pointing right, multiple crystal blades on back, sniper turret posture, angular aggressive ranged silhouette. Different from round core golem. Dark muted purple background."
+    },
+    {
+      "id": "silicon/unit_2",
+      "name": "晶墙 Silicon Wall",
+      "palette": "silicon",
+      "style_note": "厚重六边盾甲、矮宽、坦克",
+      "prompt": "A pixel art game sprite of a heavy SILICON WALL golem tank. Side profile facing right. Dark cyan thick hexagonal armor plates #286478, wide short defensive stance, massive shoulder shields, stubby legs, fortress-like silhouette, slow barrier unit. Bulkiest silicon unit. Dark muted purple background."
+    }
+  ],
+  "enemies": [
+    {
+      "id": "enemies/enemy_0",
+      "name": "Grunt 锈红方怪",
+      "palette": "enemy",
+      "style_note": "方背兽人、笨重、拳手",
+      "prompt": "A pixel art game sprite of a rust-red orc GRUNT monster. Side profile facing right. Hunched muscular body #BF4A2F, square jaw, both fists raised, angry yellow eyes, heavy boots, brute blocker silhouette. Dark muted purple background."
+    },
+    {
+      "id": "enemies/enemy_1",
+      "name": "Runner 冰蓝奔兽",
+      "palette": "enemy",
+      "style_note": "四足瘦长、速度感、和方怪完全不同",
+      "prompt": "A pixel art game sprite of a sleek ice-blue RUNNER beast. Side profile facing right. Quadruped predator #3A8FC6, lean long body, sharp snout, motion blur streak behind legs, fast hunter silhouette, no humanoid features. Dark muted purple background."
+    },
+    {
+      "id": "enemies/enemy_2",
+      "name": "Tank 暗紫重甲兽",
+      "palette": "enemy",
+      "style_note": "圆甲巨兽、极厚、慢",
+      "prompt": "A pixel art game sprite of a dark purple armored TANK monster. Side profile facing right. Round spiked shell #6E5A73, thick plated limbs, small head sunk in armor, fortress beetle silhouette, slow heavy boss minion. Dark muted purple background."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "terminalAllowlist": [
+    "git status",
+    "git diff",
+    "git log",
+    "Get-ChildItem",
+    "ls",
+    "dir"
+  ],
+  "autoRun": {
+    "allow_instructions": [
+      "Read-only git commands (status, diff, log) can run without asking.",
+      "Listing or reading files in the workspace can run without asking.",
+      "Running Godot headless smoke tests for this project can run without asking.",
+      "Running project test scripts under tools/ and tests/ can run without asking."
+    ],
+    "block_instructions": [
+      "Any command that deletes files must ask for approval.",
+      "Any command that modifies .env or git config must ask for approval.",
+      "Any global install (npm install -g, pip install --user) must ask for approval."
+    ]
+  }
+}

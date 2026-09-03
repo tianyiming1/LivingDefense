@@ -1,0 +1,14 @@
+﻿{
+  "negative": "blurry, low quality, watermark, text, logo, noise, oversaturated, extra limbs",
+  "style_suffix": ", digital concept art, dark background, cinematic lighting, high detail",
+  "scenes": [
+    { "id": "veins",      "prompt": "flowing crystalline silicon veins, glowing cyan energy lines (RGB 111 211 231), hexagonal crystal lattice, luminous particles streaming along conduits, deep space" },
+    { "id": "hive",       "prompt": "silicon crystal hive city, hexagonal glowing structures, luminous cyan conduits network, floating crystal shards, dark sci-fi atmosphere" },
+    { "id": "warrior",    "prompt": "glowing silicon crystal warrior, faceted hexagonal armor, cyan energy core in chest, radiant white highlights, dark background" },
+    { "id": "storm",      "prompt": "crystal particle storm, floating luminous cyan particles with motion trails, hexagonal grid field, aurora glow" },
+    { "id": "overcharge", "prompt": "crystal core overcharging, golden-white burst, cyan crystal shards exploding, energy flash ring, dramatic" },
+    { "id": "wall",       "prompt": "massive silicon crystal wall, hexagonal facets, glowing white cracks, defensive formation, cyan ambient light" },
+    { "id": "hub",        "prompt": "silicon hub node, central diamond crystal radiating energy streams, geodesic framework, flowing light" },
+    { "id": "fungus_ctrl", "prompt": "bioluminescent mushroom field, purple-green spore glow, spreading mycelium carpet on dark ground, fantasy concept art" }
+  ]
+}

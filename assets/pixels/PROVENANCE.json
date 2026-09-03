@@ -1,0 +1,116 @@
+{
+  "policy": "docs/ASSET_POLICY.md",
+  "updated": "2026-09-03",
+  "disclaimer": "Not legal advice. commercial_ok=false means do not ship in Steam build until replaced.",
+  "assets": [
+    {
+      "id": "human/unit_0..4",
+      "paths": [
+        "human/unit_0.png",
+        "human/unit_1.png",
+        "human/unit_2.png",
+        "human/unit_3.png",
+        "human/unit_4.png"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_sprites_34.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "Self-authored procedural sprites."
+    },
+    {
+      "id": "fungus/unit_0..3",
+      "paths": [
+        "fungus/unit_0.png",
+        "fungus/unit_1.png",
+        "fungus/unit_2.png",
+        "fungus/unit_3.png"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_sprites_34.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": ""
+    },
+    {
+      "id": "silicon/unit_0..2",
+      "paths": [
+        "silicon/unit_0.png",
+        "silicon/unit_1.png",
+        "silicon/unit_2.png"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_sprites_34.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": ""
+    },
+    {
+      "id": "enemies/enemy_0..3",
+      "paths": [
+        "enemies/enemy_0.png",
+        "enemies/enemy_1.png",
+        "enemies/enemy_2.png",
+        "enemies/enemy_3.png"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_sprites_34.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": ""
+    },
+    {
+      "id": "map/*",
+      "paths": [
+        "map/"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_map_tiles.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": ""
+    },
+    {
+      "id": "chat_ref_werewolf",
+      "paths": [],
+      "source": "unknown_user_paste",
+      "tool": "unknown",
+      "license": "unknown",
+      "commercial_ok": false,
+      "notes": "Do NOT import until provenance proven (own AI with commercial rights, or commission, or CC0)."
+    },
+    {
+      "id": "dragon/unit_0",
+      "paths": [
+        "dragon/unit_0.png"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_dragon_anatomy.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "procedural whelp 4-leg"
+    },
+    {
+      "id": "dragon/unit_2",
+      "paths": [
+        "dragon/unit_2.png"
+      ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_dragon_anatomy.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "procedural adult 4-leg"
+    },
+    {
+      "id": "dragon/unit_1",
+      "paths": [
+        "dragon/unit_1.png"
+      ],
+      "source": "local_sd",
+      "tool": "pick_004 raw reimport A_soft",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "reimport from pick_004_flame_drake_raw; no palette quantize"
+    }
+  ]
+}

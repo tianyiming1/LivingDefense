@@ -1,0 +1,12 @@
+﻿.godot/
+.godot-xdg/
+.appdata/
+.pyenv/
+.cursor/worktrees/
+*.translation
+logs/
+*.log
+s1_out.txt
+run_*.log
+.DS_Store
+Thumbs.db

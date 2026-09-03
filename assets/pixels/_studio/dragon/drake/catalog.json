@@ -1,0 +1,53 @@
+{
+  "asset_id": "dragon/drake",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T10:59:09",
+      "note": "procedural_anatomy",
+      "source": "draw_dragon_anatomy",
+      "seed": null,
+      "prompt": "procedural guaranteed limbs",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/001_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/001_game.png"
+    },
+    {
+      "index": 2,
+      "tag": "002",
+      "created": "2026-09-03T10:59:36",
+      "note": "sil_i2i_s0.4",
+      "source": "gen_from_silhouette",
+      "seed": 927,
+      "prompt": "medium orange drake quadruped pixel art, exactly four legs no arms, exactly two wings on back, one head one tail, side view full body, solid dark purple background",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/002_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/002_game.png"
+    },
+    {
+      "index": 3,
+      "tag": "003",
+      "created": "2026-09-03T10:59:37",
+      "note": "sil_i2i_s0.4",
+      "source": "gen_from_silhouette",
+      "seed": 940,
+      "prompt": "medium orange drake quadruped pixel art, exactly four legs no arms, exactly two wings on back, one head one tail, side view full body, solid dark purple background",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/003_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/003_game.png"
+    },
+    {
+      "index": 4,
+      "tag": "004",
+      "created": "2026-09-03T11:01:07",
+      "note": "procedural_anatomy_v2",
+      "source": "draw_dragon_anatomy",
+      "seed": null,
+      "prompt": "procedural guaranteed limbs v2",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/004_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/004_game.png"
+    }
+  ]
+}

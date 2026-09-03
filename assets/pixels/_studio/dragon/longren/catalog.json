@@ -1,0 +1,77 @@
+{
+  "asset_id": "dragon/longren",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T10:59:09",
+      "note": "procedural_anatomy",
+      "source": "draw_dragon_anatomy",
+      "seed": null,
+      "prompt": "procedural guaranteed limbs",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/longren/001_raw.png",
+      "game": "assets/pixels/_studio/dragon/longren/001_game.png"
+    },
+    {
+      "index": 2,
+      "tag": "002",
+      "created": "2026-09-03T10:59:32",
+      "note": "sil_i2i_s0.4",
+      "source": "gen_from_silhouette",
+      "seed": 1738,
+      "prompt": "orange bipedal dragon man pixel art, exactly two arms with clawed hands, exactly two legs with feet, exactly two bat wings on back, one head one tail, side view facing right, full body, solid dark purple background",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/longren/002_raw.png",
+      "game": "assets/pixels/_studio/dragon/longren/002_game.png"
+    },
+    {
+      "index": 3,
+      "tag": "003",
+      "created": "2026-09-03T10:59:33",
+      "note": "sil_i2i_s0.4",
+      "source": "gen_from_silhouette",
+      "seed": 1751,
+      "prompt": "orange bipedal dragon man pixel art, exactly two arms with clawed hands, exactly two legs with feet, exactly two bat wings on back, one head one tail, side view facing right, full body, solid dark purple background",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/longren/003_raw.png",
+      "game": "assets/pixels/_studio/dragon/longren/003_game.png"
+    },
+    {
+      "index": 4,
+      "tag": "004",
+      "created": "2026-09-03T11:01:07",
+      "note": "procedural_anatomy_v2",
+      "source": "draw_dragon_anatomy",
+      "seed": null,
+      "prompt": "procedural guaranteed limbs v2",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/longren/004_raw.png",
+      "game": "assets/pixels/_studio/dragon/longren/004_game.png"
+    },
+    {
+      "index": 5,
+      "tag": "005",
+      "created": "2026-09-03T11:31:16",
+      "note": "reimport_A_soft",
+      "source": "reimport_raw",
+      "seed": null,
+      "prompt": "pick_004 raw reimport no-quantize",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/longren/005_raw.png",
+      "game": "assets/pixels/_studio/dragon/longren/005_game.png"
+    },
+    {
+      "index": 6,
+      "tag": "006",
+      "created": "2026-09-03T11:40:34",
+      "note": "reimport_96x108_C_red_eye",
+      "source": "reimport_hires",
+      "seed": null,
+      "prompt": "pick_004 raw @96x108",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/longren/006_raw.png",
+      "game": "assets/pixels/_studio/dragon/longren/006_game.png"
+    }
+  ]
+}

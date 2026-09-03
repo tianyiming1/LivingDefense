@@ -1,0 +1,2 @@
+A1 init reached
+A4 await ok
