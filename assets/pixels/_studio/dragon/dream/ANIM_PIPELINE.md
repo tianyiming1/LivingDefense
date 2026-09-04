@@ -30,6 +30,7 @@ python tools/gen/promote_dream_hand_anim.py --unit 14
 
 ## 已清除（不得再出现）
 
-- WorkBuddy 安装路径当交付  
-- `SIL_POSE_*` / Comfy 锁站姿 / 整图果冻  
-- **self_flap mesh/pivot 16f 当真交付**（拖影/掏空身体/叠影）
+- WorkBuddy 安装路径 / `*_WORKBUDDY_REJECT`  
+- `SIL_POSE_*` / Comfy 锁站姿 / 整图果冻 / `comfy_flap`  
+- **self_flap mesh/pivot 16f**（含 quarantine / COMPARE / GATE）  
+- 未过审 ship `unit_{14..17}_anim` 真帧（已清空；`prefer_frames:false`）
