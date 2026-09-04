@@ -1,20 +1,20 @@
-﻿{
-    "unit_id":  16,
-    "canvas":  [
-                   96,
-                   108
-               ],
-    "shoulder":  [
-                     47.0,
-                     53.2
-                 ],
-    "foot_y":  98.0,
-    "mode":  "path_a_full_body_bob",
-    "full_body":  true,
-    "stub_r":  8,
-    "parts":  [
-                  "body"
-              ],
-    "prefer_frames":  false,
-    "note":  "prefer_frames false — unapproved anim frames deleted 2026-09-04"
+{
+  "unit_id": 16,
+  "canvas": [
+    96,
+    108
+  ],
+  "shoulder": [
+    47.0,
+    53.2
+  ],
+  "foot_y": 98.0,
+  "mode": "path_a_full_body_bob",
+  "full_body": true,
+  "stub_r": 8,
+  "parts": [
+    "body"
+  ],
+  "prefer_frames": false,
+  "note": "prefer_frames false; FAIL flap evidence purged"
 }

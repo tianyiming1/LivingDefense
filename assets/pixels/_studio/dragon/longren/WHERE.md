@@ -16,13 +16,8 @@
 - 禁多尾（未明文授权时）
 
 ## 否决参考（禁止当生成锚）
-- `_refs/ref_REJECT_spiky_ugly_armor.png` — 尖刺丑甲
-- `_refs/ref_REJECT_frost_002_multitail.png` — 旧霜棱 002，**多尾不行**
 
-## 状态
-正在按 **pick_004 晶体块鳞像素风** 重出（纪律：仅 1 对背翼、仅 1 尾；004 旧髋翼不得再现）。  
-出图进 `candidates/`，过审后进 `approved/`。
+- ~~`_refs/ref_REJECT_spiky_ugly_armor.png`~~ — **已删**
+- ~~`_refs/ref_REJECT_frost_002_multitail.png`~~ — **已删**
 
-男：`magma/storm/stone` 的 `approved` 可看（仍须复审单尾/单对翼）。
-
-**梦龙**（兽体，非女霜棱）：见 `../dream/` — `frost/candidates/042` 已迁出定名。
+未过审 `candidates/` 已清空；只看各亚种 `approved/` + 用户 `picks/`。
