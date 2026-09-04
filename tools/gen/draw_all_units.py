@@ -28,7 +28,8 @@ S_DARK = (40, 100, 120)
 
 SPECS = [
     ("human", 0, lambda: draw_human_infantry_34(1)),
-    ("human", 1, draw_human_musketeer_34),
+    # CO-042 / W4：unit_1 = 弓手（勿再画火枪）
+    ("human", 1, draw_human_musketeer_34),  # legacy name; draw_human_roster_w4 overrides ship
     ("human", 2, draw_human_mortar_34),
     ("human", 3, draw_human_arbalest_34),
     ("human", 4, draw_human_cleric_34),

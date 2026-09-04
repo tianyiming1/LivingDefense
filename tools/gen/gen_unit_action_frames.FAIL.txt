@@ -1,0 +1,2 @@
+FAIL 2026-09-03: band-split pose generator shredded silhouettes.
+Do not ship its output. Rebuild anim via Comfy pose sheets or hand frames.

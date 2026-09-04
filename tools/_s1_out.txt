@@ -1,0 +1,153 @@
+﻿Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+[PASS] placement_reject_corridor_S0_mid
+[PASS] placement_reject_corridor_S2_mid
+[PASS] placement_reject_corridor_S3_mid
+[PASS] placement_reject_corridor_S4_mid
+[PASS] placement_reject_corridor_S5_mid
+[PASS] placement_reject_corridor_corner_P1
+[PASS] placement_reject_bounds_outside_xy
+[PASS] placement_reject_bounds_negative
+[PASS] placement_reject_bounds_edge_x
+[PASS] placement_reject_no_money
+[PASS] buy_f1_w1_spends_exact
+[PASS] placement_accept_legal_spot
+[PASS] placement_reject_overlap
+[PASS] buy_f2_w1_spends_exact
+[PASS] buy_g2_w1_spends_exact
+[PASS] buy_a1_w1_spends_exact
+[PASS] buy_a2_w1_spends_exact
+[PASS] skill_reject_in_planning
+[PASS] wave1_started
+[PASS] skill_cast_wave1
+[PASS] skill_buff_applied
+[PASS] skill_cd_same_wave_reject
+[PASS] wave1_cleared
+[PASS] skill_cd_wave1_end_not_ready
+[PASS] tech_gunpowder_w2
+[PASS] buy_c1_w2_spends_exact
+[PASS] wave2_started
+[PASS] wave2_cleared
+[PASS] evolve_a1_w3
+[PASS] evolve_a2_w3
+[PASS] wave3_started
+[PASS] skill_ready_wave3
+[PASS] wave3_cleared
+[PASS] tech_chapel_w4
+[PASS] buy_e1_w4_spends_exact
+[PASS] buy_b1_w4_spends_exact
+[PASS] wave4_started
+[PASS] wave4_cleared
+[PASS] buy_c2_w5_spends_exact
+[PASS] buy_e2_w5_spends_exact
+[PASS] wave5_started
+[PASS] wave5_cleared
+[PASS] tech_siege_w6
+[PASS] buy_h1_w6_spends_exact
+[PASS] buy_b2_w6_spends_exact
+[PASS] wave6_started
+[PASS] wave6_cleared
+[PASS] tech_arbalest_w7
+[PASS] buy_d1_w7_spends_exact
+[PASS] wave7_started
+[PASS] wave7_cleared
+[PASS] evolve_c1_w8
+[PASS] wave8_started
+[PASS] wave8_cleared
+[PASS] evolve_c2_w9
+[PASS] wave9_started
+[PASS] wave9_cleared
+[PASS] wave10_started
+[PASS] wave10_cleared
+[PASS] wave11_started
+[PASS] wave11_cleared
+[PASS] wave12_started
+[PASS] win_state_reached_12_waves
+[PASS] lives_positive_at_win
+[PASS] money_never_negative
+[PASS] death_signal_single_emit
+[PASS] loss_stat_matches_death_signals
+
+===== S1 鑷姩鍖栭獙鏀舵姤鍛?=====
+[PASS] placement_reject_corridor_S0_mid
+[PASS] placement_reject_corridor_S2_mid
+[PASS] placement_reject_corridor_S3_mid
+[PASS] placement_reject_corridor_S4_mid
+[PASS] placement_reject_corridor_S5_mid
+[PASS] placement_reject_corridor_corner_P1
+[PASS] placement_reject_bounds_outside_xy
+[PASS] placement_reject_bounds_negative
+[PASS] placement_reject_bounds_edge_x
+[PASS] placement_reject_no_money
+[PASS] buy_f1_w1_spends_exact
+[PASS] placement_accept_legal_spot
+[PASS] placement_reject_overlap
+[PASS] buy_f2_w1_spends_exact
+[PASS] buy_g2_w1_spends_exact
+[PASS] buy_a1_w1_spends_exact
+[PASS] buy_a2_w1_spends_exact
+[PASS] skill_reject_in_planning
+[PASS] wave1_started
+[PASS] skill_cast_wave1
+[PASS] skill_buff_applied
+[PASS] skill_cd_same_wave_reject
+[PASS] wave1_cleared
+[PASS] skill_cd_wave1_end_not_ready
+[PASS] tech_gunpowder_w2
+[PASS] buy_c1_w2_spends_exact
+[PASS] wave2_started
+[PASS] wave2_cleared
+[PASS] evolve_a1_w3
+[PASS] evolve_a2_w3
+[PASS] wave3_started
+[PASS] skill_ready_wave3
+[PASS] wave3_cleared
+[PASS] tech_chapel_w4
+[PASS] buy_e1_w4_spends_exact
+[PASS] buy_b1_w4_spends_exact
+[PASS] wave4_started
+[PASS] wave4_cleared
+[PASS] buy_c2_w5_spends_exact
+[PASS] buy_e2_w5_spends_exact
+[PASS] wave5_started
+[PASS] wave5_cleared
+[PASS] tech_siege_w6
+[PASS] buy_h1_w6_spends_exact
+[PASS] buy_b2_w6_spends_exact
+[PASS] wave6_started
+[PASS] wave6_cleared
+[PASS] tech_arbalest_w7
+[PASS] buy_d1_w7_spends_exact
+[PASS] wave7_started
+[PASS] wave7_cleared
+[PASS] evolve_c1_w8
+[PASS] wave8_started
+[PASS] wave8_cleared
+[PASS] evolve_c2_w9
+[PASS] wave9_started
+[PASS] wave9_cleared
+[PASS] wave10_started
+[PASS] wave10_cleared
+[PASS] wave11_started
+[PASS] wave11_cleared
+[PASS] wave12_started
+[PASS] win_state_reached_12_waves
+[PASS] lives_positive_at_win
+[PASS] money_never_negative
+[PASS] death_signal_single_emit
+[PASS] loss_stat_matches_death_signals
+---- 娉㈡鏃ュ織 (閲戦挶/鐢熷懡/鎴樻崯/鍦ㄥ満鍗曚綅) ----
+  wave  1 | $  243 | lives 32 | lost 0 | units 5
+  wave  2 | $  244 | lives 32 | lost 0 | units 6
+  wave  3 | $  329 | lives 32 | lost 0 | units 6
+  wave  4 | $  273 | lives 32 | lost 0 | units 8
+  wave  5 | $  369 | lives 32 | lost 0 | units 10
+  wave  6 | $  337 | lives 32 | lost 1 | units 11
+  wave  7 | $  492 | lives 32 | lost 5 | units 8
+  wave  8 | $  803 | lives 32 | lost 5 | units 8
+  wave  9 | $ 1029 | lives 32 | lost 6 | units 7
+  wave 10 | $ 1436 | lives 32 | lost 6 | units 7
+  wave 11 | $ 1841 | lives 32 | lost 6 | units 7
+鏈€浣庨噾閽? 29 | 姝讳骸淇″彿鎬绘暟: 6 | 鍗曞崟浣嶆渶澶ф浜′俊鍙? 1
+鎬昏: 67 閫氳繃 / 0 澶辫触
+===== 缁撴灉: ACCEPT =====

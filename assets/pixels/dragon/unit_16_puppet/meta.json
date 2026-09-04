@@ -1,0 +1,24 @@
+{
+  "unit_id": 16,
+  "canvas": [
+    96,
+    108
+  ],
+  "shoulder": [
+    47.0,
+    53.2
+  ],
+  "foot_y": 98.0,
+  "mode": "clean_static_rollback",
+  "full_body": true,
+  "stub_r": 8,
+  "parts": [
+    "body"
+  ],
+  "prefer_frames": true,
+  "fly_source": "self_mesh_warp_042",
+  "fly_frames": 16,
+  "fly_sheet": true,
+  "motion_ratio": 0.724,
+  "complete_action": true
+}

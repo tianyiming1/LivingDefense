@@ -1,4 +1,4 @@
-# 菌丝网络：以每个菌族单位为圆心向四周扩散；踩丝减速+掉血；菌丝内敌人可被攻击
+# 菌丝网络：以每个菌族单位为圆心向四周扩散；踩丝减速；菌丝内敌人可被攻击
 extends Node2D
 
 var sources: Array[Dictionary] = []  # {pos, radius, grow_mult}
@@ -6,6 +6,7 @@ var fever_slow_bonus := 0.0  # 菌毯沸腾：额外减速
 var active := false
 var _pulse := 0.0
 var _edge_sparks: Array[Dictionary] = []
+var _fever_burst := 0.0  # CO-014：沸腾瞬间视觉脉冲
 
 func activate() -> void:
 	active = true
@@ -66,6 +67,28 @@ func effect_at(pos: Vector2) -> Dictionary:
 
 func set_fever(slow_bonus: float) -> void:
 	fever_slow_bonus = slow_bonus
+	if slow_bonus > 0.0:
+		pulse_fever()
+	queue_redraw()
+
+func pulse_fever() -> void:
+	_fever_burst = 1.25
+	for s in sources:
+		for i in range(8):
+			var ang := float(i) / 8.0 * TAU + _pulse
+			var edge: Vector2 = s["pos"] + Vector2(cos(ang), sin(ang)) * float(s["radius"])
+			_edge_sparks.append({"pos": edge, "life": 0.7, "r": 9.0, "fever": true})
+	queue_redraw()
+
+func pulse_spore_burst(at: Vector2) -> void:
+	for i in range(10):
+		var ang := float(i) / 10.0 * TAU
+		_edge_sparks.append({
+			"pos": at + Vector2(cos(ang), sin(ang)) * (18.0 + float(i % 3) * 8.0),
+			"life": 0.55,
+			"r": 7.0,
+			"fever": true,
+		})
 	queue_redraw()
 
 func boost_spread(mult: float, _duration: float = 0.0) -> void:
@@ -76,14 +99,18 @@ func _process(delta: float) -> void:
 	if not active or sources.is_empty():
 		return
 	_pulse += delta
+	if _fever_burst > 0.0:
+		_fever_burst = maxf(0.0, _fever_burst - delta)
+	var fever_on: bool = fever_slow_bonus > 0.0
 	for s in sources:
 		var grow: float = Config.CARPET_SPREAD_SPEED * float(s.get("grow_mult", 1.0)) * delta
 		var prev_r: float = float(s["radius"])
 		s["radius"] = minf(Config.CARPET_MAX_RADIUS, prev_r + grow)
-		if s["radius"] - prev_r > 0.4 and randf() < 0.08:
+		var spark_chance: float = 0.14 if fever_on else 0.08
+		if s["radius"] - prev_r > 0.4 and randf() < spark_chance:
 			var ang := randf() * TAU
 			var edge: Vector2 = s["pos"] + Vector2(cos(ang), sin(ang)) * float(s["radius"])
-			_edge_sparks.append({"pos": edge, "life": 0.45, "r": 5.0})
+			_edge_sparks.append({"pos": edge, "life": 0.5 if fever_on else 0.45, "r": 7.0 if fever_on else 5.0, "fever": fever_on})
 	_tick_sparks(delta)
 	queue_redraw()
 
@@ -98,21 +125,30 @@ func _tick_sparks(delta: float) -> void:
 func _draw() -> void:
 	if not active:
 		return
-	var pulse_a: float = 0.55 + 0.45 * sin(_pulse * 5.0)
+	var fever_on: bool = fever_slow_bonus > 0.0
+	var pulse_spd: float = 8.0 if fever_on else 5.0
+	var pulse_a: float = 0.55 + 0.45 * sin(_pulse * pulse_spd)
+	var burst_a: float = clampf(_fever_burst / 1.25, 0.0, 1.0)
+	var fill: Color = Color(0.18, 0.48, 0.12, 0.34) if not fever_on else Color(0.35, 0.55, 0.08, 0.42)
+	var rim: Color = Color(0.42, 0.9, 0.28, 0.55 * pulse_a) if not fever_on else Color(0.95, 0.85, 0.25, 0.7 * pulse_a)
 	for s in sources:
 		var c: Vector2 = s["pos"]
 		var r: float = float(s["radius"])
-		# 外圈菌丝
-		draw_circle(c, r, Color(0.14, 0.42, 0.1, 0.28))
-		draw_arc(c, r, 0.0, TAU, 64, Color(0.38, 0.82, 0.25, 0.42 * pulse_a), 2.0, true)
+		# 外圈菌丝（CO-014：提高对比；沸腾偏黄绿）
+		draw_circle(c, r, fill)
+		draw_arc(c, r, 0.0, TAU, 64, rim, 2.8 if fever_on else 2.2, true)
+		if fever_on or burst_a > 0.0:
+			var fr: float = r * (1.0 + 0.08 * burst_a)
+			draw_arc(c, fr, 0.0, TAU, 64, Color(1.0, 0.75, 0.2, 0.35 * pulse_a + 0.45 * burst_a), 4.0, true)
 		# 内圈脉络
 		if r > 18.0:
-			draw_arc(c, r * 0.55, 0.0, TAU, 48, Color(0.45, 0.9, 0.32, 0.15 * pulse_a), 1.2, true)
+			draw_arc(c, r * 0.55, 0.0, TAU, 48, Color(0.5, 0.95, 0.35, 0.22 * pulse_a), 1.4, true)
 		# 菌株圆心
-		draw_circle(c, 10.0, Color(0.22, 0.55, 0.14, 0.55))
-		draw_circle(c, 5.0, Color(0.5, 0.95, 0.38, 0.7 * pulse_a))
+		draw_circle(c, 10.0, Color(0.22, 0.55, 0.14, 0.6))
+		draw_circle(c, 5.0, Color(0.55, 1.0, 0.4, 0.75 * pulse_a))
 		# 扩散前沿脉冲
-		draw_arc(c, r, _pulse * 2.0, _pulse * 2.0 + PI * 0.6, 24, Color(0.65, 1.0, 0.45, 0.5 * pulse_a), 3.0, true)
+		draw_arc(c, r, _pulse * 2.0, _pulse * 2.0 + PI * 0.6, 24, Color(0.7, 1.0, 0.45, 0.55 * pulse_a), 3.2, true)
 	for sp in _edge_sparks:
-		var a: float = float(sp["life"]) / 0.5
-		draw_circle(sp["pos"], float(sp["r"]) * a, Color(0.75, 1.0, 0.55, 0.7 * a))
+		var a: float = float(sp["life"]) / 0.55
+		var col := Color(1.0, 0.85, 0.3, 0.85 * a) if bool(sp.get("fever", false)) else Color(0.75, 1.0, 0.55, 0.7 * a)
+		draw_circle(sp["pos"], float(sp["r"]) * a, col)

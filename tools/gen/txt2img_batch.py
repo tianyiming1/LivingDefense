@@ -1,4 +1,4 @@
-﻿"""批量出图：硅基流动概念图（单进程加载一次 pipe，多场景×seed）"""
+"""批量出图：硅基流动概念图（单进程加载一次 pipe，多场景×seed）"""
 import argparse, json, os, sys, time
 import torch
 from diffusers import StableDiffusionPipeline, LCMScheduler

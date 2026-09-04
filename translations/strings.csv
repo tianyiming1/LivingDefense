@@ -1,18 +1,55 @@
 keys,zh_CN,en
 unit_0,步兵,Infantry
-unit_1,火枪手,Musketeer
+unit_1,弓箭手,Archer
 unit_2,迫击炮,Mortar
-unit_3,弩塔,Arbalest
+unit_3,箭塔,Arrow Tower
+unit_7,火枪手,Musketeer
+unit_8,法师,Mage
+unit_10,队长,Captain
+unit_11,士官长,Sergeant Major
+unit_12,团长,Regiment CO
+unit_13,师长,Division CO
+unit_14,军长,Corps CO
+unit_15,司令,Commander
+unit_16,大司令,Grand Commander
+unit_17,统帅,Marshal
+unit_18,军委司令,Commission CO
+unit_19,英雄,Hero
+unit_20,长弓手,Longbow
+unit_21,神射手,Sharpshooter
+unit_22,老练弓手,Veteran Archer
+unit_23,鹰眼,Eagle Eye
+unit_25,步枪手,Rifleman
+unit_26,精锐步枪,Elite Rifle
+unit_30,榴弹炮,Howitzer
+unit_31,攻城巨炮,Siege Cannon
+unit_40,重弩,Heavy Crossbow
+unit_41,弩炮,Ballista
+unit_50,祭司,Priest
+unit_51,主教,Bishop
+unit_60,监工,Overseer
+unit_61,管家,Steward
+unit_70,加固补给站,Fortified Depot
+unit_71,大型补给站,Grand Depot
+unit_80,奥术学徒,Adept
+unit_81,战斗法师,War Mage
+unit_82,大法师,Archmage
+evolve_need_wave,该军衔需推进到第 %d 波后。,That rank unlocks from wave %d.
 unit_4,牧师,Cleric
 unit_5,农民,Farmer
 unit_6,补给站,Supply Depot
+msg_hero_cap,英雄最多同时 2 名！,Hero cap is 2!
 enemy_0,小兵,Grunt
 enemy_1,跑者,Runner
 enemy_2,坦克,Tank
 enemy_3,铁皮,Armored
+enemy_4,攻城传令,Siege Herald
+enemy_5,夜驿使,Night Courier
+enemy_6,噬垒巨颚,Rampart Maw
+enemy_7,飞翼斥候,Sky Raider
 hud_money,金钱：$%d,Money: $%d
 hud_supply,补给：%d/%d,Supply: %d/%d
-hud_lives,生命：%d,Lives: %d
+hud_lives,大本营：%d,HQ: %d
 hud_lost,战损：%d,Lost: %d
 hud_wave,波次 %d/%d,Wave %d/%d
 hud_start,开始波次,Start Wave
@@ -25,15 +62,15 @@ skill_cd_fungus,1：菌毯沸腾（%s）,1: Carpet Fever (%s)
 skill_cd_silicon,1：晶化凝固（%s）,1: Crystal Freeze (%s)
 skill_cd_dragon,1：龙焰吐息（%s）,1: Dragon Breath (%s)
 skill_cd_text,1：技能（%s）,1: Skill (%s)
-hud_evolve,进化,Evolve
-hud_evolve_cost,进化 $%d,Evolve $%d
-hud_evolve_max,进化（满级）,Evolve (max)
+hud_evolve,升军衔,Rank up
+hud_evolve_cost,升军衔 $%d,Rank $%d
+hud_evolve_max,军衔已满,Rank max
 hud_sell,出售,Sell
 hud_sell_cost,出售 $%d,Sell $%d
 hud_restart,重新开始,Restart
 hud_ready,就绪,Ready
 msg_intro,召唤单位守住路径，然后点击「开始波次」！,Summon units to block the path then Start Wave!
-msg_intro_human,先建补给站。牧师耗蓝治疗。波4铁皮近战刮不动，用火枪/迫击！,Depot first. Cleric heals with mana. Wave4 Armored resists melee — use guns/mortars!
+msg_intro_human,先建补给站与农民。编制：步兵、弓箭手、箭塔、法师（群体AOE）、牧师（可升军衔）。点大本营选科技方向——升科技强化全族相关兵；军衔只升单兵。英雄最多 2 名。,Depot+farmers. Roster: infantry, archer, arrow tower, mage (AOE), cleric (ranks). HQ tech buffs all related units; ranks upgrade one unit. Max 2 heroes.
 msg_intro_fungus,布置蘑菇后菌丝蔓延。1：菌毯沸腾  2：孢子爆发传染链！,Place mushrooms — mycelium spreads. 1: Carpet Fever  2: Spore Burst!
 msg_intro_dragon,只能召唤幼龙/龙人（最多 4 只），点单位可进化→亚龙→成龙。1：龙焰吐息！,Buy whelps/dragonkin only (max 4). Evolve to Drake then Dragon. 1: Breath!
 msg_intro_silicon,连晶脉攒晶能。1：晶化凝固（冻怪）  2：共振脉冲！,Link crystals for energy. 1: Freeze  2: Resonate!
@@ -51,12 +88,15 @@ msg_skill_wave_only,技能只能在波次进行中使用！,Skill usable during 
 msg_skill_cd,技能冷却中（第 %d 波就绪）,Skill recharging (ready at wave %d)
 msg_rally,火力齐射！全军攻速 +50%，持续 8 秒。,RALLY FIRE! Attack speed +50% for 8s.
 msg_wave_incoming,第 %d 波来袭！,Wave %d incoming!
-msg_wave_armored,第 4 波：铁皮来了！近战刮不动——上火枪/迫击，牧师耗蓝抬血。,Wave 4: Armored! Melee is weak — muskets/mortars. Cleric heals with mana.
+msg_wave_armored,第 4 波：铁皮来了！近战刮不动——上弓箭/法师AOE，牧师耗蓝抬血。,Wave 4: Armored! Melee is weak — archers/mage AOE. Cleric heals with mana.
 msg_wave_incoming_armored,第 %d 波来袭（含铁皮）！,Wave %d incoming (Armored inside)!
 stat_hp,生命,HP
 stat_title,%s（%s %d/%d）,%s (%s %d/%d)
 stat_line,段 %d｜速度 %d｜伤害 %.0f｜攻速 %.1f,Seg %d | Spd %d | Dmg %.0f | Rate %.1f
 stat_line_fungus,代数 %d｜伤害 %.1f｜攻速 %.1f,Gen %d | Dmg %.1f | Rate %.1f
+stat_line_enemy,速度 %d｜攻击 %.0f｜间隔 %.1fs｜赏金 %d,Spd %d | Atk %.0f | Interval %.1fs | Gold %d
+stat_next_rank,下一军衔：%s,Next rank: %s
+hud_evolve_to,升→%s $%d,Rank→%s $%d
 stat_line_healer,蓝 %d/%d｜治疗 %.0f｜耗蓝 %.0f,MP %d/%d | Heal %.0f | Cost %.0f
 stat_line_farmer,进补给站后生产补给（站外不产）,Works only inside a Supply Depot
 stat_line_depot,站内存货 %d/%d（清波补满）,Depot stock %d/%d (refill on clear)
@@ -69,14 +109,14 @@ overlay_game_over,游戏结束,Game Over
 overlay_defeat,基地在第 %d 波被摧毁，损失单位 %d 个,Your base fell at wave %d. Units lost: %d
 overlay_victory,胜利！,Victory!
 overlay_victory_msg,全部 %d 波已击退！剩余生命 %d，损失单位 %d,All %d waves beaten! Lives: %d | Units lost: %d
-msg_wave_cleared,第 %d 波已清理！奖励 +$%d。可继续部署，再开始下一波。,Wave %d cleared! Bonus +$%d. Keep deploying, then next wave.
+msg_wave_cleared,第 {w} 波已清理！奖励 +{b}。可继续部署，再开始下一波。,"Wave {w} cleared! Bonus +{b}. Keep deploying, then next wave."
 menu_title,活体防线,The Living Rampart
 menu_start,开始游戏,Start Game
 menu_language,语言：%s,Language: %s
 lang_zh,中文,Chinese
 lang_en,英文,English
 menu_quit,退出游戏,Quit
-menu_controls,左键召唤｜右键/ESC 取消｜1 释放技能｜T 切换语言,LMB summon | RMB/ESC cancel | 1 skill | T language
+menu_controls,滚轮缩放｜中键/WASD移镜｜选兵右键派往/进攻｜左键召唤｜1 技能｜T 语言,Wheel zoom | pan | select+RMB move/attack | LMB summon | 1 skill | T lang
 hud_menu,返回菜单,Menu
 menu_subtitle,塔会走，会流血，会进化,Towers that walk bleed and evolve
 race_human,人族,Human
@@ -90,15 +130,35 @@ f_unit_3,麻痹蘑菇,Paralyzer
 d_unit_0,焰息幼龙,Flame Whelp
 d_unit_1,铁鳞幼龙,Ironscale Whelp
 d_unit_2,爆炎幼龙,Blast Whelp
-d_unit_3,龙人,Dragonkin
+d_unit_3,火龙人,Fire Longren
 d_unit_4,焰息亚龙,Flame Drake
 d_unit_5,铁鳞亚龙,Ironscale Drake
 d_unit_6,爆炎亚龙,Blast Drake
 d_unit_7,焰息成龙,Flame Dragon
 d_unit_8,铁鳞成龙,Ironscale Dragon
 d_unit_9,爆炎成龙,Blast Dragon
-d_unit_10,龙人卫士,Dragonkin Guard
-d_unit_11,龙人统领,Dragonkin Lord
+d_unit_10,火龙人导师,Fire Longren Adept
+d_unit_11,火龙人统领,Fire Longren Lord
+d_unit_12,霜棱龙人,Frost Longren
+d_unit_13,镜影幼龙,Mirror Whelp
+d_unit_14,梦幼龙,Dream Whelp
+d_unit_15,梦亚龙,Dream Drake
+d_unit_16,梦青年龙,Dream Youth
+d_unit_17,梦成龙,Dream Adult
+msg_dream_mass_sleep,群梦落下——怪流停了一拍。,Mass dream falls — the lane holds a breath.
+msg_secret_dragon,龙影入册——隐藏种族「龙族」已可选用,Dragon inscribed — hidden race unlocked
+msg_secret_dragon_already,龙影仍在——龙族早已苏醒,Dragon already awakened
+msg_secret_easter_units,鳞下密藏已开——霜棱 / 镜影 / 梦龙,Scale cache opened — Frost / Mirror / Dream
+msg_secret_easter_already,密藏早已打开,Easter units already unlocked
+evt_dragon_omen_ask,远方龙影低语……Y 铭记龙裔之名（解锁隐藏种族）/ N 当作幻听,Distant dragon omen… Y: remember the kin (unlock hidden race) / N: dismiss as illusion
+evt_dragon_omen_yes,你铭记了龙裔之名。本局余烬加持；回菜单可选龙族。,You remembered the dragonkin. Embers this run; Dragon race on next menu.
+evt_dragon_omen_no,你当作幻听，风声散去。,You dismiss it. The wind fades.
+evt_dragon_omen_already,龙裔之名早已铭记。,Dragonkin already remembered.
+evt_scale_vault_ask,鳞下裂隙露出密藏……Y 开启（解锁隐藏单位）/ N 封印,A vault under the scales… Y: open (unlock hidden units) / N: seal
+evt_scale_vault_yes,密藏打开：霜棱龙人、镜影幼龙、梦龙已入龙族编制。,Vault open: Frost Longren, Mirror Whelp, Dream Dragon join the roster.
+evt_scale_vault_no,你封回裂隙。,You seal the fissure.
+evt_scale_vault_already,密藏早已打开。,Vault already open.
+evt_scale_vault_need_dragon,须先铭记龙裔之名。,Remember the dragonkin first.
 si_unit_0,硅晶核,Silicon Core
 si_unit_1,硅晶刺,Silicon Spike
 si_unit_2,硅晶壁,Silicon Wall
@@ -107,7 +167,7 @@ skill_fungus_ready,1：菌毯沸腾 [就绪]  2：孢子爆发,1: Carpet Fever [
 skill_silicon_ready,1：晶化凝固 [晶能 %d]  2：共振,1: Freeze [Crystal %d]  2: Resonate
 skill_dragon_ready,1：龙焰吐息 [就绪],1: Dragon Breath [READY]
 skill_none_text,无主动技能,No active skill
-msg_fungus_fever,菌毯沸腾！减速加强，传染链短暂武装。,Carpet Fever! Slow up, infection chain armed.
+msg_fungus_fever,菌毯沸腾！减速加强，传染链短暂武装。,"Carpet Fever! Slow up, infection chain armed."
 msg_fungus_spore,孢子爆发！感染 %d 个敌人，击杀会继续传染。,Spore Burst! Infected %d — kills spread infection.
 msg_silicon_resonate,共振脉冲！晶脉传导范围伤害。,Resonance pulse along the vein!
 msg_silicon_freeze,晶化凝固！冻结前方 %d 个敌人。,Crystal Freeze! Immobilized %d foes.
@@ -118,3 +178,141 @@ msg_dragon_breath,龙焰吐息！全场敌人持续灼烧。,Dragon Breath! All 
 msg_dragon_cap,龙巢已满（最多 4 只）。,Dragon nest full (max 4).
 msg_dragon_egg,龙已回巢，约 %d 秒后重孵。,Dragon returned to nest — hatch in ~%ds.
 msg_dragon_hatch,%s 破壳复出！,%s hatched again!
+hud_dragon_nest,龙巢：%d/%d,Nest: %d/%d
+hud_dragon_eggs,孵蛋：%d（最短 %ds）,Eggs: %d (min %ds)
+msg_fungus_carpet_step,敌人踩上菌毯！减速并附着孢子。,Enemy on mycelium! Slowed + spore cling.
+msg_fungus_infect_burst,感染爆发！击杀可继续传染。,Infection burst! Kills can spread further.
+evt_storm,雷暴来袭！闪电可能劈敌，也可能误伤。,Storm! Lightning may hit foes — or you.
+evt_storm_hit_enemy,雷击命中敌人！,Lightning struck an enemy!
+evt_storm_hit_ally,雷击误伤友军！,Lightning hit an ally!
+evt_epiphany,%s 顿悟！攻速飙升。,%s attained insight! Attack speed surges.
+evt_epiphany_none,无人可悟道（先部署战斗单位）。,No unit to enlighten — deploy fighters first.
+evt_dig,地上出现宝点！点击挖掘（福祸难料）。,A dig site appeared — click it (risk/reward).
+evt_dig_gold,挖到金币 +$%d！,Dug up gold +$%d!
+evt_dig_supply,挖到补给 +%d！,Dug up supply +%d!
+evt_dig_empty,空坑……什么都没有。,Empty hole… nothing.
+evt_dig_ambush,惊动伏兵！将在下波杀出。,Ambush! Extra foes join next wave.
+evt_runner_surge,跑者潮！额外 %d 名跑者杀入。,Runner surge! +%d runners inbound.
+evt_theft,补给被盗 −%d！,Supply stolen −%d!
+evt_theft_empty,窃贼扑空（你本来就没补给）。,Thieves found no supply.
+evt_wind,大风劲吹！敌人加速突进。,Gale! Enemies surge faster.
+evt_blood_gold_ask,血金交易？按 Y 扣大本营 8HP 换 $80，N 拒绝。,Blood gold? Y: −8 HQ HP for $80. N: refuse.
+evt_blood_gold_yes,以堡换金……大本营 −8HP，+$80。,Fort for gold… HQ −8 HP, +$80.
+evt_blood_gold_no,你拒绝了血金交易。,You refused the blood deal.
+evt_blood_gold_refuse_low,大本营过残，无法交易。,HQ too damaged to trade.
+evt_merchant_ask,游商：花 $40 得进化折扣？Y 接受 / N 拒绝。,Merchant: pay $40 for evolve discount? Y/N.
+evt_merchant_yes,游商契约生效：进化更便宜（一段时间）。,Merchant pact: cheaper evolves for a while.
+evt_merchant_no,你打发走了游商。,You waved the merchant off.
+evt_merchant_no_money,钱不够付给游商。,Not enough gold for the merchant.
+evt_rain,霖雨滞敌！敌人减速，抓紧补防/经营。,Rain slows foes — reinforce and manage now.
+evt_race_fungus,菌毯狂涌！蔓延加强。,Mycelium surge! Carpet spreads hard.
+evt_race_silicon,晶脉过载！晶能 +2。,Vein overload! Crystal +2.
+evt_race_dragon,龙息余烬！全军短暂攻速。,Dragon embers! Brief attack speed for all.
+evt_race_human,军需补给到账 +$45。,Logistics drop +$45.
+hud_items,遗物：%s,Relics: %s
+item_eq01,清波赏金匣,Clear Bounty Coffer
+item_eq02,焦油壶,Tar Pot
+item_eq03,急救绷带,Field Bandage
+item_eq04,后勤账本,Logistics Ledger
+item_eq05,共鸣碎晶,Resonance Shard
+item_got,获得遗物：%s,Relic gained: %s
+item_dup_gold,重复遗物，换成少量金币。,Duplicate relic → small gold.
+item_full_refuse,遗物已满，拒收并获补偿金。,"Relic bag full — refused, gold instead."
+item_bounty_proc,清波赏金匣：完美清波额外赏金！,Bounty Coffer: perfect clear bonus!
+item_tar_active,焦油壶生效：终点前减速。,Tar Pot active: slow near the end.
+item_bandage_proc,急救绷带救起 %s！,Bandage saved %s!
+item_shard_crystal,共鸣碎晶：晶能 +1。,Resonance Shard: crystal +1.
+item_shard_skill,共鸣碎晶：技能冷却提前就绪！,Resonance Shard: skill CD ready early!
+boss_phase_melee,巨颚转近战硬甲！改用弓箭/法师AOE。,Maw plated vs melee! Switch to bows/mage AOE.
+boss_phase_ranged,巨颚转远程硬甲！近战顶上砍。,Maw plated vs ranged! Melee in to cut.
+boss_half_adds,半血增援！2 只跑者冲出——先堵口！,Half HP adds! 2 runners — plug the choke!
+item_replace_ask,遗物已满：Y 弃「%s」换「%s」/ N 拒收(+金),"Bag full: Y drop ""%s"" for ""%s"" / N refuse (+gold)"
+item_replace_yes,弃 %s，装上 %s。,"Dropped %s, equipped %s."
+item_replace_no,拒收新遗物，获得补偿金。,"Refused new relic, took gold instead."
+evt_rumble,终点震颤！近家门口的敌人加速突进——快集火！,Endquake! Near-exit foes surge — focus fire!
+evt_near_end_warn,警告：有敌人逼近终点！,Warning: enemies nearing the exit!
+evt_evolve_tide,进化潮汐！一段时间进化更便宜。,Evolve tide! Cheaper evolves for a while.
+wave_banner_6,精英波：夜驿使！它给周围敌人加速——优先击杀。,Elite: Night Courier! It hastes nearby foes — prioritize it.
+wave_banner_9,精英波：攻城传令！先打掉护盾再输出。,Elite: Siege Herald! Break the shield first.
+wave_banner_12,中盘精英双压：夜驿使+攻城传令！拆光环、破护盾。,Mid elites: Courier + Herald! Kill haste aura and break shields.
+wave_banner_15,双攻城传令！护盾叠压——法师/迫击优先。,Twin Siege Heralds! Stacked shields — mage/mortar first.
+wave_banner_18,终局 Boss：噬垒巨颚！护甲相位会切换——混编近战/远程/法师。,Finale Boss: Rampart Maw! Armor phases — mix melee/ranged/mage.
+wave_banner_2,首只坦克！集火重甲，别让它顶穿前排。,First tank! Focus the heavy before it breaks the line.
+wave_banner_4,铁皮来了！近战刮不动——上弓箭/法师AOE。,Armored wave! Melee scrapes — bows/mage AOE.
+wave_banner_5,跑者入场！飞翼斥候掠过——近战打不到，上弓/箭塔/法师！,Runners + Sky Raiders! Melee can't hit air — use bows/towers/mages!
+wave_banner_7,混编压境：坦克+铁皮+跑者同时来。,Mixed pressure: tanks + armored + runners together.
+wave_banner_8,虫潮！小兵与跑者扎堆——溅射/齐射。,Swarm! Grunts and runners clump — splash/rally.
+wave_banner_10,铁皮潮！远程优先，近战别硬顶。,Iron tide! Prioritize ranged; don't melee-tank them.
+wave_banner_11,跑者洪峰！多层堵口，技能留给这一波。,Runner flood! Layer the choke; save skills for this.
+map_a,S 形,S-Bend
+map_b,窄口长廊,Narrow Hall
+map_c,锯齿折廊,Zigzag Teeth
+affix_fat_purse,词缀·肥钱包：本波击杀赏金更高！,Affix·Fat Purse: higher kill gold this wave!
+affix_iron_tide,词缀·铁潮：额外铁皮来袭——近战刮不动！,Affix·Iron Tide: extra Armored — melee scrapes!
+affix_swift_curse,词缀·疾行诅咒：敌人更快——堵口要前压！,Affix·Swift Curse: foes faster — push the choke!
+affix_glass_swarm,词缀·玻璃虫潮：大量小兵+跑者——溅射/齐射！,Affix·Glass Swarm: many grunts+runners — splash/rally!
+story_intro_human,前线补给线断了。先建站养农，步兵+弓箭手守线；箭塔/法师/牧师点大本营科研解锁。科技升全族，军衔升单兵。,Supply cut. Depot+farmers, infantry+archers; tower/mage/cleric need HQ tech. Tech buffs the branch; ranks upgrade one unit.
+hud_tech,科研,Research
+hud_shop,部署,Deploy
+hud_minimap,小地图,Minimap
+hud_tab_build,建造,Build
+hud_tab_tech,科技,Tech
+hud_select_hint,选中士兵 · 右键空地派往 · 右键怪/怪堆进攻 · 点大本营开科研,Select · RMB move · RMB enemy/area attack · HQ tech
+hud_select_empty,未选中单位,No unit selected
+hud_placing_panel,正在召唤：%s · 左键放置 · 右键/ESC 取消,Summoning: %s · LMB place · RMB/ESC cancel
+msg_order_move,已派往指定地点,Ordered to move
+msg_order_fly,起飞前往（Shift+右键=走路）,Flying there (Shift+RMB = walk)
+msg_order_walk,步行前往,Walking there
+msg_order_attack_area,已下令清剿该区域,Ordered to clear the area
+msg_order_attack_unit,已下令攻击：%s,Ordered to attack: %s
+hud_close,关闭,Close
+hud_shop_hint,点选单位后在地图放置,Select a unit then place on map
+hud_tech_hint,点大本营也可打开科研,Click HQ to open research too
+tech_infantry,步兵条令,Infantry Doctrine
+tech_archery,箭术训练,Archery Drill
+tech_logistics,后勤整备,Logistics
+tech_chapel,战地圣堂（牧师）,Field Chapel (Cleric)
+tech_arbalest,箭塔工坊,Arrow Tower Yard
+tech_siege,爆破研习（法师AOE）,Blast Study (mage AOE)
+tech_arcane,奥术学院（法师）,Arcane College (Mage)
+tech_hint_infantry,升级后全体近战更强,All melee stronger
+tech_hint_archery,升级后全体弓手更强,All archers stronger
+tech_hint_logistics,升级后农民/补给站更强,Farmers/depots stronger
+tech_hint_chapel,解锁牧师并强化治疗,Unlock cleric; boost heal
+tech_hint_arbalest,解锁箭塔并强化对空,Unlock tower; boost AA
+tech_hint_siege,强化法师群体溅射,Boost mage splash
+tech_hint_arcane,解锁法师并强化法伤,Unlock mage; boost spell
+tech_level_up,%s 升至 %d 级！相关兵种全体强化。,%s → Lv%d! Related units buffed.
+tech_unlocked,科技解锁：%s,Tech unlocked: %s
+tech_done,该科技已满级。,Tech maxed.
+tech_need_prereq,需要先研究前置科技。,Need prerequisite tech first.
+tech_need_wave,该科技需推进到第 %d 波后。,Available from wave %d onward.
+tech_need_money,金钱不足，无法研究。,Not enough money to research.
+tech_locked,现在不能研究这项科技。,Cannot research this tech now.
+tech_unit_locked,%s 尚未解锁——先点大本营科研。,%s locked — click HQ to research first.
+tech_evolve_locked,进化到 %s 需要对应科技。,Evolving to %s needs the matching tech.
+enemy_skill_basic,基础：沿廊道突进，遇阻则近战攻击单位。,Basic: push the lane; melee units when blocked.
+enemy_skill_flying,飞行：近战打不到，需弓/箭塔/法师拦截。,Flying: melee can't hit; need bow/tower/mage.
+enemy_skill_armored,铁皮护甲：近战承伤大幅降低，怕溅射/远程。,Armored: resists melee; weak to splash/ranged.
+enemy_skill_haste_aura,疾行光环：加速周围敌人。,Haste aura: speeds nearby foes.
+enemy_skill_shield,护盾：先打掉护盾再造成本体伤害。,Shield: break shield before body damage.
+enemy_skill_phase_armor,相位护甲：周期性切换近战/远程抗性。,Phase armor: swaps melee/ranged resist.
+enemy_skill_elite,精英：高威胁特殊单位。,Elite: high-threat special.
+enemy_skill_boss,Boss：终局巨兽，半血增援，护甲相位切换。,Boss: finale beast, half-HP adds, armor phases.
+hq_hit,大本营承伤 −%d！,HQ takes −%d!
+hq_status,大本营 HP %d / %d,HQ HP %d / %d
+hq_tech_hint,大本营 HP %d / %d · 左侧科研已开,HQ HP %d / %d · research panel open
+story_intro_fungus,腐土醒来。你是菌毯的意志：铺席、分裂、传染——别让路被跑空。,"Rot-soil wakes. You are the carpet's will: spread, split, infect — don't let runners empty the lane."
+story_intro_dragon,龙裔血脉稀少。四爪为限。开局已有梦龙：选中后右键点地看走路。,"Dragonblood is scarce. Cap four. A Dream Wyrm starts with you — select, RMB-move to see walk."
+msg_dream_preview,梦龙就位：右键飞过去（翅会扇）；Shift+右键走路；靠近怪看咏唱攻击。,Dream ready: RMB = fly (wings flap); Shift+RMB = walk; attack foes to cast.
+story_intro_silicon,晶脉在低语。连链攒能，凝固打乱节奏，共振清场。,"Crystal veins whisper. Link for energy, freeze the tempo, resonate the clear."
+map_tip_map_a,本图课：内弯口袋叠火力。,Map lesson: stack DPS in the inner bend.
+map_tip_map_b,本图课：两处竖窄口是强制交火点。,Map lesson: two vertical chokes are forced fights.
+map_tip_map_c,本图课：竖井堵口，齿间口袋放远程。,Map lesson: plug vertical shafts; pocket ranged between teeth.
+evt_detour,廊道改道！中段偏移——快挪近战到新弯内侧！,Path detour! Mid-lane shifted — move melee to the new bend!
+evt_detour_end,廊道复原。检查站位是否空窗。,Path restored. Check for empty coverage.
+evt_detour_fail,改道失败（路径过短）。,Detour failed (path too short).
+evt_pact_ask,祭品契约：Y 献祭选中/残血单位换全军爆发 / N 拒绝,Pact: Y sacrifice selected/weakest for army burst / N refuse
+evt_pact_yes,献祭了 %s！全军伤害暴涨——本波打穿！,Sacrificed %s! Army damage surges — punch this wave!
+evt_pact_no,拒绝契约。保留编制。,Pact refused. Roster kept.
+evt_pact_no_unit,没有可献祭的战斗单位。,No combat unit to sacrifice.

@@ -1,0 +1,42 @@
+{
+  "family": "dragon/longren",
+  "note": "龙人五亚种：体型+色板双差；动画/UI/姿态按 id 分目录",
+  "species": [
+    {
+      "id": "magma",
+      "name_zh": "焰鳞",
+      "archive_id": "dragon/longren/magma",
+      "body": "thick_stocky",
+      "palette": "crimson_purple"
+    },
+    {
+      "id": "frost",
+      "name_zh": "霜棱",
+      "archive_id": "dragon/longren/frost",
+      "body": "lean_angular",
+      "palette": "ice_bluewhite"
+    },
+    {
+      "id": "storm",
+      "name_zh": "雷冠",
+      "archive_id": "dragon/longren/storm",
+      "body": "lean_crowned",
+      "palette": "charcoal_gold"
+    },
+    {
+      "id": "stone",
+      "name_zh": "岩夯",
+      "archive_id": "dragon/longren/stone",
+      "body": "short_wide",
+      "palette": "sandstone_brown"
+    },
+    {
+      "id": "jade",
+      "name_zh": "碧枝",
+      "archive_id": "dragon/longren/jade",
+      "body": "tall_slender",
+      "palette": "jade_green"
+    }
+  ],
+  "per_species_dirs": ["candidates", "picks", "pose", "anim/idle", "anim/walk", "anim/attack", "ui"]
+}

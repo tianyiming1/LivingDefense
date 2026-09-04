@@ -1,0 +1,17 @@
+{
+  "asset_id": "ui/panel_frame",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T14:45:42",
+      "note": "comfy_t2i_ui_panel_frame",
+      "source": "comfy_img2img_pick004",
+      "seed": 1526022691,
+      "prompt": "pixel art UI empty panel frame only, wooden fort border with iron rivets, warm brown oak planks, dark stone inner bevel, hollow transparent center for content, 9-slice friendly corners, flat readable game HUD chrome, solid black background, no text no icons no characters",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/ui/panel_frame/001_raw.png",
+      "game": "assets/pixels/_studio/ui/panel_frame/001_game.png"
+    }
+  ]
+}

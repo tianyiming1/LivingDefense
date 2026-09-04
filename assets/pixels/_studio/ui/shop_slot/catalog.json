@@ -1,0 +1,17 @@
+{
+  "asset_id": "ui/shop_slot",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T14:47:10",
+      "note": "comfy_t2i_ui_shop_slot",
+      "source": "comfy_img2img_pick004",
+      "seed": 328031726,
+      "prompt": "pixel art UI rectangular button face, wooden plank button with iron corner brackets, slightly recessed center for label, warm brown and muted gold edge highlight, flat game HUD, solid black background, no text no characters",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/ui/shop_slot/001_raw.png",
+      "game": "assets/pixels/_studio/ui/shop_slot/001_game.png"
+    }
+  ]
+}

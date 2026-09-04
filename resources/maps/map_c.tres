@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MapData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/map_data.gd" id="1_mapdata"]
+
+[resource]
+script = ExtResource("1_mapdata")
+id = "map_c"
+display_name_key = "map_c"
+path_points = PackedVector2Array(-90, 240, 390, 240, 390, 840, 750, 840, 750, 240, 1110, 240, 1110, 840, 1470, 840, 1470, 450, 1860, 450)

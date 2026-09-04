@@ -1,0 +1,77 @@
+{
+  "asset_id": "dragon/drake/frost/candidates",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T17:51:27",
+      "note": "comfy_t2i_drake_frost",
+      "source": "comfy_img2img_pick004",
+      "seed": 233545052,
+      "prompt": "single quadruped flying DRAGON drake 霜棱, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, pale ice-blue white crystalline scales navy wing membranes, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/frost/candidates/001_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/frost/candidates/001_game.png"
+    },
+    {
+      "index": 2,
+      "tag": "002",
+      "created": "2026-09-03T17:52:42",
+      "note": "comfy_t2i_drake_frost",
+      "source": "comfy_img2img_pick004",
+      "seed": 930757890,
+      "prompt": "single quadruped flying DRAGON drake 霜棱, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, pale ice-blue white crystalline scales navy wing membranes, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/frost/candidates/002_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/frost/candidates/002_game.png"
+    },
+    {
+      "index": 3,
+      "tag": "003",
+      "created": "2026-09-03T17:53:50",
+      "note": "comfy_t2i_drake_frost",
+      "source": "comfy_img2img_pick004",
+      "seed": 1395535612,
+      "prompt": "single quadruped flying DRAGON drake 霜棱, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, pale ice-blue white crystalline scales navy wing membranes, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/frost/candidates/003_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/frost/candidates/003_game.png"
+    },
+    {
+      "index": 4,
+      "tag": "004",
+      "created": "2026-09-03T18:27:43",
+      "note": "comfy_t2i_drake_frost",
+      "source": "comfy_img2img_pick004",
+      "seed": 1962052268,
+      "prompt": "single quadruped flying DRAGON drake 霜棱, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, pale ice-blue white crystalline scales navy wing membranes, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/frost/candidates/004_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/frost/candidates/004_game.png"
+    },
+    {
+      "index": 5,
+      "tag": "005",
+      "created": "2026-09-03T18:28:07",
+      "note": "comfy_t2i_drake_frost",
+      "source": "comfy_img2img_pick004",
+      "seed": 1801952851,
+      "prompt": "single quadruped flying DRAGON drake 霜棱, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, pale ice-blue white crystalline scales navy wing membranes, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/frost/candidates/005_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/frost/candidates/005_game.png"
+    },
+    {
+      "index": 6,
+      "tag": "006",
+      "created": "2026-09-03T18:28:32",
+      "note": "comfy_t2i_drake_frost",
+      "source": "comfy_img2img_pick004",
+      "seed": 1310009273,
+      "prompt": "single quadruped flying DRAGON drake 霜棱, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, pale ice-blue white crystalline scales navy wing membranes, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/frost/candidates/006_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/frost/candidates/006_game.png"
+    }
+  ]
+}

@@ -72,12 +72,13 @@ and `../docs/VERSION-SUPPORT.md`.
 
 After the engine, read the request for task signals (three **additive** categories):
 
-- **disciplines** (cross-engine concepts): `create-game-assets`, `asset-architecture`, `game-ai`, `ai-behavior-trees-utility-ai`, `procedural-gen`, `dialogue-systems`,
+- **disciplines** (cross-engine concepts): `design-logic`, `create-game-assets`, `asset-architecture`, `game-ai`, `ai-behavior-trees-utility-ai`, `procedural-gen`, `dialogue-systems`,
   `save-systems`, `audio-design`, `shader-programming`, `physics-tuning`, `level-design`,
   `input-systems`, `game-feel`, `camera-systems`, `game-ui-ux`, `performance-optimization`.
   Triggered by concept words ("sprite sheet", "art direction", "texture", "pathfinding",
   "save slots", "fragment shader", "screen shake", "camera follow", "HUD/menu",
-  "optimize/low FPS", "整理资源", "去重", "目录架构", "_studio").
+  "optimize/low FPS", "整理资源", "去重", "目录架构", "_studio",
+  "逻辑/自洽/矛盾/挡路/比例/白屏/安全带/视口纪律" → **always load `design-logic` first**).
 - **genres** (whole-game templates): `platformer`, `roguelike`, `rpg`, `fps-shooter`,
   `tower-defense`, `card-game`, `visual-novel`, `survival-crafting`, `puzzle`. Triggered by genre
   words ("make a roguelike", "deckbuilder").
@@ -111,6 +112,7 @@ File signals sharpen this: `*.yarn`/`*.ink` → `dialogue-systems`/`visual-novel
 
 | Concept (`says:`) | Discipline skill | Pairs with (engine API) |
 |-------------------|------------------|-------------------------|
+| 逻辑五关, 自洽, 矛盾, 挡路, 视口比例, 白屏, HUD 安全带, 口径偷换, 「修好了」无证据 | `design-logic` | `game-ui-ux` / `camera-systems` / `godot-ui-control`；正文 `docs/纪律_设计逻辑与战场视口.md` |
 | art direction, game assets, sprites, tilesets, textures, icons, 3D props | `create-game-assets` | engine importer/rendering skill; `imagegen` when available |
 | reorganize pixels, dedupe, folder taxonomy, ship vs studio, promote candidates, `_studio`, 整理资源/去重/架构 | `asset-architecture` | `create-game-assets` / `directing-game-visuals`; tools under `tools/gen/` |
 | enemy AI, behavior tree, pathfinding, steering | `game-ai` | `unity-navmesh` / `unreal-behavior-trees` / Godot nav |

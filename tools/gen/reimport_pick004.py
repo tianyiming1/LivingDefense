@@ -1,4 +1,4 @@
-"""从 pick_004 raw 导入 96×108（更大分辨率保五官），并点红色龙眼。"""
+"""还原为干净重导入（无手动画臂/爪），同步 ship。"""
 from __future__ import annotations
 
 import os
@@ -14,90 +14,57 @@ from pixelize import add_outline, crop_full_body, detect_bg_rgb, remove_bg  # no
 RAW = os.path.join(ROOT, "assets", "pixels", "_studio", "dragon", "picks", "pick_004_flame_drake_raw.png")
 PICKS = os.path.join(ROOT, "assets", "pixels", "_studio", "dragon", "picks")
 SHIP = os.path.join(ROOT, "assets", "pixels", "dragon", "unit_1.png")
-
-# 新规范：96×108（相对旧 64×72 的 1.5×）
 W, H = 96, 108
 
 
-def reimport(src: str, out: str, *, pad: float = 0.20, mid: int = 384, outline: bool = True, bg_tol: int = 95):
-    im = Image.open(src).convert("RGBA")
-    bg = detect_bg_rgb(im)
-    im = crop_full_body(im, bg, tol=bg_tol, pad_frac=pad)
-    im = im.resize((mid, mid), Image.LANCZOS)
-    im = im.resize((W, H), Image.NEAREST)
-    im = remove_bg(im, bg, tol=max(bg_tol, 100))
-    if outline:
-        im = add_outline(im)
-    os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
-    im.save(out, optimize=True)
-    return im
-
-
-def paint_red_eye(im: Image.Image) -> Image.Image:
-    """高对比红色龙眼（黑眶+亮红），适配 96×108。"""
+def fill_tiny(im: Image.Image) -> Image.Image:
     px = im.load()
-    w, h = im.size
-
-    def put(x, y, c):
-        if 0 <= x < w and 0 <= y < h:
-            px[x, y] = c
-
-    # 头部位于上半；按比例约在旧 27,10 → 新 ~40,15
-    ex, ey = 40, 15
-    BLK = (0, 0, 0, 255)
-    RED = (255, 28, 28, 255)
-    HOT = (255, 90, 70, 255)
-    PUP = (20, 0, 5, 255)
-
-    # 6×5 眼
-    for dx in range(-1, 6):
-        put(ex + dx, ey - 1, BLK)
-        put(ex + dx, ey + 4, BLK)
-    for dy in range(0, 4):
-        put(ex - 1, ey + dy, BLK)
-        put(ex + 5, ey + dy, BLK)
-    for dx in range(0, 5):
-        for dy in range(0, 4):
-            put(ex + dx, ey + dy, RED)
-    put(ex + 1, ey, HOT)
-    put(ex + 2, ey, HOT)
-    put(ex + 1, ey + 1, HOT)
-    put(ex + 2, ey + 1, HOT)
-    put(ex + 2, ey + 2, PUP)
-    put(ex + 3, ey + 2, PUP)
-    put(ex + 1, ey + 3, PUP)
+    fixes = []
+    for y in range(1, H - 1):
+        for x in range(1, W - 1):
+            if px[x, y][3] >= 20:
+                continue
+            cols = [
+                px[x + dx, y + dy][:3]
+                for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1))
+                if px[x + dx, y + dy][3] >= 40
+            ]
+            if len(cols) == 4:
+                fixes.append(
+                    (
+                        x,
+                        y,
+                        (
+                            sum(c[0] for c in cols) // 4,
+                            sum(c[1] for c in cols) // 4,
+                            sum(c[2] for c in cols) // 4,
+                            255,
+                        ),
+                    )
+                )
+    for x, y, c in fixes:
+        px[x, y] = c
     return im
-
-
-def gray_preview(im: Image.Image, path: str, scale: int = 3):
-    big = im.resize((W * scale, H * scale), Image.NEAREST)
-    bg = Image.new("RGBA", big.size, (55, 55, 62, 255))
-    bg.alpha_composite(big)
-    bg.convert("RGB").save(path, optimize=True)
 
 
 def main():
-    assert os.path.isfile(RAW), RAW
-    out_c = os.path.join(PICKS, "pick_004_reimport_C_roomy.png")
-    im = reimport(RAW, out_c, pad=0.22, mid=384, outline=True, bg_tol=90)
-    im = paint_red_eye(im)
+    im = Image.open(RAW).convert("RGBA")
+    bg = detect_bg_rgb(im)
+    im = crop_full_body(im, bg, tol=90, pad_frac=0.22)
+    im = im.resize((384, 384), Image.LANCZOS)
+    im = im.resize((W, H), Image.NEAREST)
+    im = remove_bg(im, bg, tol=55)
+    im = fill_tiny(im)
+    im = add_outline(im)
 
     game = os.path.join(PICKS, "pick_004_flame_drake_game.png")
-    im.save(out_c, optimize=True)
     im.save(game, optimize=True)
     im.save(SHIP, optimize=True)
-    gray_preview(im, os.path.join(PICKS, "LOOK_AT_ME_pick004.png"))
-    gray_preview(im, os.path.join(PICKS, "pick_004_flame_drake_game_preview4x.png"))
-    gray_preview(im, os.path.join(PICKS, "pick_004_reimport_C_roomy_preview4x.png"))
 
-    archive_pair(
-        "dragon/longren",
-        RAW,
-        game,
-        note="reimport_96x108_C_red_eye",
-        source="reimport_hires",
-        prompt="pick_004 raw @96x108",
-    )
+    big = im.resize((W * 4, H * 4), Image.NEAREST)
+    bg_im = Image.new("RGBA", big.size, (200, 200, 210, 255))
+    bg_im.alpha_composite(big)
+    bg_im.convert("RGB").save(os.path.join(PICKS, "pick_004_flame_drake_game_preview4x.png"), optimize=True)
 
     anim = os.path.join(ROOT, "assets", "pixels", "dragon", "unit_1_anim")
     os.makedirs(anim, exist_ok=True)
@@ -108,8 +75,21 @@ def main():
     for i in range(3):
         im.save(os.path.join(anim, f"attack_{i}.png"), optimize=True)
 
-    print("DONE %dx%d" % (W, H), "->", SHIP)
-    print("preview:", os.path.join(PICKS, "LOOK_AT_ME_pick004.png"))
+    archive_pair(
+        "dragon/longren",
+        RAW,
+        game,
+        note="96x108_clean_restore_no_hand_paint",
+        source="reimport_hires",
+        prompt="restore clean downsample; stop boxy hand overlays",
+    )
+
+    for tmp in ("_tmp_hand_R.png", "_tmp_hand_L.png", "_tmp_clean_base.png"):
+        p = os.path.join(PICKS, tmp)
+        if os.path.isfile(p):
+            os.remove(p)
+
+    print("RESTORED clean", game)
 
 
 if __name__ == "__main__":

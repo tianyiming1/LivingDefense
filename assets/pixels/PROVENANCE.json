@@ -4,19 +4,31 @@
   "disclaimer": "Not legal advice. commercial_ok=false means do not ship in Steam build until replaced.",
   "assets": [
     {
-      "id": "human/unit_0..4",
+      "id": "human/roster_w4",
       "paths": [
         "human/unit_0.png",
         "human/unit_1.png",
         "human/unit_2.png",
         "human/unit_3.png",
-        "human/unit_4.png"
+        "human/unit_4.png",
+        "human/unit_5.png",
+        "human/unit_6.png",
+        "human/unit_8.png"
       ],
+      "source": "procedural",
+      "tool": "tools/gen/draw_human_roster_w4.py",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "CO-ART-PROD-001 W4: 96x108; unit_1=archer (bow) not musket; farmer/depot/mage added."
+    },
+    {
+      "id": "human/unit_0..4_legacy_replaced",
+      "paths": [],
       "source": "procedural",
       "tool": "tools/gen/draw_sprites_34.py",
       "license": "owned_by_project",
       "commercial_ok": true,
-      "notes": "Self-authored procedural sprites."
+      "notes": "Replaced by human/roster_w4."
     },
     {
       "id": "fungus/unit_0..3",
@@ -111,6 +123,34 @@
       "license": "owned_by_project",
       "commercial_ok": true,
       "notes": "reimport from pick_004_flame_drake_raw; no palette quantize"
+    },
+    {
+      "id": "dragon/unit_3",
+      "paths": [
+        "dragon/unit_3.png",
+        "dragon/unit_3_anim/"
+      ],
+      "source": "studio_approved",
+      "tool": "copy from longren/magma/approved/022_game.png + procedural bob anim",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "Fire Longren; ART_REVIEW magma 022 PASS; anim is placeholder bob until real frames"
+    },
+    {
+      "id": "dragon/unit_14_15_16",
+      "paths": [
+        "dragon/unit_14.png",
+        "dragon/unit_15.png",
+        "dragon/unit_16.png",
+        "dragon/unit_14_anim/",
+        "dragon/unit_15_anim/",
+        "dragon/unit_16_anim/"
+      ],
+      "source": "studio_dream",
+      "tool": "dream whelp approved 001 / candidates 002 / pick_dream_menglong; placeholder bob anim",
+      "license": "owned_by_project",
+      "commercial_ok": true,
+      "notes": "CO-045/046 Dream chain stills; unit_15 interim from whelp-002; real anim frames TBD"
     }
   ]
 }

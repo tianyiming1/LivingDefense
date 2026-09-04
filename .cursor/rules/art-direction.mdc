@@ -1,0 +1,64 @@
+﻿---
+description: 美术/像素/精灵/怪物图/动画帧资产生成专业规范（角色、怪物、敌人、塔精灵、行走/攻击帧、素材图任务必读并强制走项目管线）
+globs: **/*.png, **/*.gd, **/docs/**, **/prompts*.json
+---
+
+# 美术与资产生成规范（TowerDefenseProto 项目）
+
+> 适用：任何视觉产出任务（角色/敌人/塔精灵、概念图、图标、UI、背景、风格讨论）。
+> 原则：先定规范 → 再生成 → 视觉验收 → 才可交付。禁止"散装提示词碰运气"。
+
+## 一、任务开工前（必做）
+1. 先读项目现有美术上下文：
+   - `docs/ART_GUIDE.md`（美术方向）、`kb/08-美术方向.md`
+   - `docs/HUMANOID_PROMPT_LIB.md`（**人形/怪物槽位词库 + 肢体红线负向词**——凡画人形生物/怪物必读，防多指断肢/特征漂移）
+   - `docs/ai_concepts/` 已批准的参考图、`tools/gen/prompts_external.json` 现有资产清单
+   - 确认本任务属于哪个种族（human/fungus/dragon/silicon/enemy），色板在 `tools/gen/pixelize.py` 的 PALETTES
+2. 没有明确风格参考时：先和用户确认视觉方向，**不要直接开画**
+
+## 二、风格锁定（每次生成前想清楚这 5 项）
+1. **风格定位**：最终目标是 DNF 式"精细像素精灵"（16-bit 级：有明暗层次与细节、硬像素边缘、深色描边；不是 8-bit 粗颗粒，也不是照片写实）
+2. **线条**：清晰硬朗、深色/黑色描边（像素精灵必须）
+3. **上色**：cel/分层明暗（低色阶、无平滑渐变）
+4. **色板**：符合该种族色板（dragon = 橙红/暗红/金；silicon = 青蓝系等）
+5. **细节密度**：中——轮廓可读优先，装饰其次
+
+## 三、生成时
+- 扩散模型直出的图 = **草稿/构图参考**，不等于成品
+- prompt 模板（英文，SDXL 友好）：
+  `pixel art / 16-bit game sprite, <角色英文描述>, <种族色板词>, side view, full body, single character, thick dark outline, flat shading, limited palette, <姿势>`
+- **人形/怪物角色**：`<角色英文描述>` 必须按 `docs/HUMANOID_PROMPT_LIB.md` 填槽——§1 种族基因 + §2 性别体型 + §3 职业/身份描述，禁止自创措辞；姿势从 §4 取（standing idle / walking / charging attack / casting spell / victory pose）
+- **负向词红线（一字不删）**：库内负向词（`extra fingers, extra arms, extra legs, missing fingers, deformed hands, broken anatomy, fused limbs, wrong arm count, wrong leg count, extra eyes, extra head, conjoined, mutated extra limb, distorted body, bad hands, bad feet, asymmetrical limbs, ...`）是防肢体错乱的生命线——任何人不得增删、精简、翻译或"觉得够了就省略"
+- 风格负向词（管质感，与肢体红线并列，同样一字不删）：`photorealistic, realistic photo, 3d render, 8-bit chunky, smooth gradient, blurry, multiple characters, spritesheet, text, watermark, deformed`
+- 一次多 seed 出 3-5 张候选供挑选，不逐张碰运气
+
+## 四、像素精灵成品的正确路径（重要）
+AI 直出 ≠ 游戏精灵。走项目管线：
+1. AI 出图（构图/特征参考）
+2. `python tools/gen/import_ai_sprite.py --id <race>/<unit> --retro`（自动：裁主体→量化到种族色板→96×108→描边）
+3. 或像素工具（Aseprite/LibreSprite）按网格+色板重绘——同角色多帧动画必须此法保证帧间一致
+4. 进 `assets/pixels/{race}/`，F5 预览
+
+## 四甲、多帧动画专用协议（同角色 行走/攻击/施法 多帧）
+> 用户要"某角色的一整套动作帧"时走本节——**帧间漂移（比例/轮廓/色板/描边逐帧乱跳）是这类任务的头号失败模式**。
+1. **首帧定锚**：先出 1 帧（站姿/默认姿势）→ 按 §五 过审 → 存 `docs/ai_concepts/` 作锚帧
+2. **帧间锁定**：后续每帧 prompt = 锚帧描述**逐字复制**，只允许替换姿势槽（`standing idle`→`walking`/`charging attack`/`casting spell`…）；其余任何词（种族基因/体型/色板/朝向/描边/负向词）一律不许改——**措辞变了 = 换了个角色，必然漂**
+3. **批量候选**：每帧一次 3-5 seed 出候选，尽量沿用锚帧同 seed 族
+4. **逐帧比对**：新帧与锚帧并排核对——整体轮廓、头部/躯干比例、色板、描边粗细必须一致才算过；不一致 → 回第 2 步用同词重出，**禁止"微调描述碰运气"**
+5. **转像素对齐**：统一走 `python tools/gen/import_ai_sprite.py --id <race>/<unit> --retro` 逐帧转换；锚点（脚底中心）必须对齐，否则进引擎播放会跳
+6. **引擎验收**：帧集齐后在 Godot 用 SpriteFrames/AnimationPlayer 实际播放，肉眼无跳变才可交付；个别残帧用 Aseprite 按网格+色板重绘修正，不整批重跑
+
+## 五、验收关（交付前必过）
+- [ ] 色板符合该种族（对照 PALETTES）
+- [ ] 轮廓在 96×108 下可读
+- [ ] 角色特征完整（如龙人：红鳞/胸口宝石/翅膀/角/双爪）
+- [ ] 无破损部位（手指/翅膀/五官没糊）
+- [ ] 尺寸/透明/描边正确，Godot 里预览正常
+- [ ] 多帧任务：帧间轮廓/色板/描边一致、Godot 播放无跳动（对照锚帧）
+- 不过关 → 回到"二、风格锁定"迭代源图，禁止"多跑几张碰运气"
+
+## 六、记录
+- 每次产出记：模型/seed/提示词/后处理路径
+- 已批准资产更新 `docs/ai_concepts/approve/` 与 asset 清单
+
+> 一句话：**先定风格 → 按规范生成 → 管线转像素 → 验收才交付。AI 是笔，不是最终答案。**

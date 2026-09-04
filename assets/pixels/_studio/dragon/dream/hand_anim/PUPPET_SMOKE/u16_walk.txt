@@ -1,0 +1,1 @@
+state=walk puppet=true

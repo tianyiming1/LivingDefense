@@ -1,0 +1,65 @@
+{
+  "asset_id": "dragon/drake/storm/candidates",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T17:55:09",
+      "note": "comfy_t2i_drake_storm",
+      "source": "comfy_img2img_pick004",
+      "seed": 1485207222,
+      "prompt": "single quadruped flying DRAGON drake 雷冠, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, charcoal black body sulfur-gold crystalline highlights, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/storm/candidates/001_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/storm/candidates/001_game.png"
+    },
+    {
+      "index": 2,
+      "tag": "002",
+      "created": "2026-09-03T17:57:04",
+      "note": "comfy_t2i_drake_storm",
+      "source": "comfy_img2img_pick004",
+      "seed": 1732483927,
+      "prompt": "single quadruped flying DRAGON drake 雷冠, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, charcoal black body sulfur-gold crystalline highlights, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/storm/candidates/002_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/storm/candidates/002_game.png"
+    },
+    {
+      "index": 3,
+      "tag": "003",
+      "created": "2026-09-03T17:58:57",
+      "note": "comfy_t2i_drake_storm",
+      "source": "comfy_img2img_pick004",
+      "seed": 1684863338,
+      "prompt": "single quadruped flying DRAGON drake 雷冠, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, charcoal black body sulfur-gold crystalline highlights, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, clean coherent full-body dragonkin sprite, EXACTLY ONE pair bat wings from upper back scapula firmly attached, two arms two legs with connected joints and clawed feet planted, free clawed hands not fused to wings, one spiked tail, solid black background, jagged crystalline scales, NO floating parts",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/storm/candidates/003_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/storm/candidates/003_game.png"
+    },
+    {
+      "index": 4,
+      "tag": "004",
+      "created": "2026-09-03T18:31:14",
+      "note": "comfy_t2i_drake_storm",
+      "source": "comfy_img2img_pick004",
+      "seed": 1602471329,
+      "prompt": "single quadruped flying DRAGON drake 雷冠, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, charcoal black body sulfur-gold crystalline highlights, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, EXACTLY ONE pair bat wings from upper back only, coherent bipedal limbs, solid black background, crystalline scales",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/storm/candidates/004_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/storm/candidates/004_game.png"
+    },
+    {
+      "index": 5,
+      "tag": "005",
+      "created": "2026-09-03T18:31:58",
+      "note": "comfy_t2i_drake_storm",
+      "source": "comfy_img2img_pick004",
+      "seed": 844675192,
+      "prompt": "single quadruped flying DRAGON drake 雷冠, exactly four legs on ground, EXACTLY ONE pair bat wings from back only, one head one spiked tail, charcoal black body sulfur-gold crystalline highlights, side view facing left full body, solid black background, jagged crystalline pixel-game style like pick_004, coherent anatomy no floating parts, EXACTLY ONE pair bat wings from upper back only, coherent bipedal limbs, solid black background, crystalline scales",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/dragon/drake/storm/candidates/005_raw.png",
+      "game": "assets/pixels/_studio/dragon/drake/storm/candidates/005_game.png"
+    }
+  ]
+}

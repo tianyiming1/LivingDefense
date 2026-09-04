@@ -36,7 +36,7 @@ def _catalog_path(asset_id: str) -> str:
 def _load_catalog(asset_id: str) -> dict:
     p = _catalog_path(asset_id)
     if os.path.isfile(p):
-        with open(p, encoding="utf-8") as f:
+        with open(p, encoding="utf-8-sig") as f:
             return json.load(f)
     return {"asset_id": asset_id, "items": []}
 

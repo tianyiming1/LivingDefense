@@ -31,6 +31,12 @@ _studio/
 
 命名：`NNN_raw.png` / `NNN_game.png` + `catalog.json`
 
+## 出图入口（pick_004 熔岩龙人风格）
+```bat
+python tools/gen/comfy_pixel_gen.py --preset flame_drake --n 4 --open
+```
+ComfyUI + Juggernaut-XL + pixel LoRA；产出只进 `_studio/dragon/longren/`，审肢后再 promote。
+
 ## 规则
 1. 出图 → 只写入 `_studio/...`，编号递增，不覆盖。
 2. 用户选定后 → promote 到 ship 的 `unit_N.png`，并写 PROVENANCE。

@@ -169,6 +169,6 @@ func _run() -> void:
 	for wave in range(1, Config.TOTAL_WAVES + 1):
 		if not await _play_wave(wave):
 			return
-	check(main.state == ST_WIN, "win_state_reached_12_waves")
+	check(main.state == ST_WIN, "win_state_reached_total_waves")
 	check(int(main.lives) > 0, "lives_positive_at_win")
 	check(money_min_seen >= 0, "money_never_negative")

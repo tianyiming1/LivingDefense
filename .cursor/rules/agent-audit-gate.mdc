@@ -1,0 +1,43 @@
+---
+description: 质量线审核官——任何 Agent 产出必须过审（skill/纪律/闸门）
+alwaysApply: true
+---
+
+# 审核官（QA / 制作人门禁）
+
+本会话或任何子 Agent 完成实质性工作后，**当前 Agent 必须以审核官身份过审**，未过审不得宣称完成、不得 promote、不得进 `picks/` / ship。
+
+## 必读纪律（按任务加载）
+
+| 场景 | 必用 skill / 文档 |
+|------|-------------------|
+| 任意游戏开发 | `.cursor/skills/router/SKILL.md` → 再读路由到的 skill |
+| 逻辑/HUD/镜头/比例/挡路 | `design-logic` + `docs/纪律_设计逻辑与战场视口.md` + `kb/12-设计逻辑与视口纪律.md`（规则：`design-logic-viewport.mdc`） |
+| 美术/像素/出图/龙族 | **先读** `assets/pixels/_studio/dragon/STUDIO_MUST_READ.md`，再读 `ANATOMY.md` + `STYLE_GATE_pick004.md` + `longren/WHERE.md` + 相关 `SPECIES.md`；**凡角色/怪物/敌人/精灵/动画帧（含人族/敌族等非龙族）一律先读 `.cursor/rules/art-direction.mdc` + `docs/HUMANOID_PROMPT_LIB.md`（含 §四甲 多帧协议与负向词红线）**；skills：`directing-game-visuals` + `create-game-assets` + `asset-architecture` |
+| 塔防玩法/数值 | `tower-defense` + `evaluating-gameplay-balance` |
+| Godot 实现 | 对应 `godot-*` |
+| 工作室流程 | `.cursor/agents/game-studio-agent.md`（职权/门禁/证据；§8 设计逻辑 + **§9 龙族必看**） |
+
+## 每份交付物检查清单
+
+1. **Skill / 必读**：开工是否读过上表 +（龙族任务）`STUDIO_MUST_READ.md`？（未读 = 不合规，责令补读后重验）
+2. **目录**：WIP 只在 `_studio/`；龙人只进 `longren/{id}/candidates/`；未过审不进 `approved/` / `picks/` / ship
+3. **解剖**：龙人仅 1 对背翼、恰好 1 尾（除非明文多尾）、2 臂 2 腿；禁止髋副翼/翅粘臂/乱肢/多尾
+4. **互斥与着装**：女体 XOR 龙头；女=漂亮+大胸+轻甲胸装+裙且亚种可分；男=强壮+龙吻；禁尖刺丑甲/全裸/武器
+5. **亚种**：色+体型+角尾+服装可分；禁止只换色
+6. **证据**：有 catalog/note/seed 或可复现命令；禁止口头「差不多」
+7. **门禁**：FAIL 删除或明确标注；PASS 才拷 `approved/`；用户终审后才 `picks/`
+8. **否决锚**：不得用 `ref_REJECT_*.png` 或违规旧稿当生成参考
+
+## 审核输出格式（强制）
+
+```
+### 审核裁定
+- 对象：…
+- Skill 合规：PASS / FAIL（缺哪些）
+- 纪律/闸门：PASS / FAIL（条款）
+- 结论：PASS | CONDITIONAL | FAIL
+- 处置：允许继续 / 返工要点 / 禁止 promote
+```
+
+审核官可否决执行 Agent 的「已完成」声明。

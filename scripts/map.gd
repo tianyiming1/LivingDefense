@@ -1,4 +1,5 @@
 # 地图层：像素草地平铺 + 路径走廊 + 出生/终点标记
+# CO-037：路径描边氛围 + 暗角，减轻「灰盒」感
 # 天气叠加见 weather_controller.gd（独立层，不改本层逻辑）
 extends Node2D
 
@@ -14,6 +15,7 @@ const TEX_GOAL := "res://assets/pixels/map/goal_32.png"
 
 var _tilemap: TileMap
 var _use_pixels := false
+var _fx: Node2D = null
 
 func _ready() -> void:
 	_use_pixels = _can_use_pixel_tiles()
@@ -21,6 +23,12 @@ func _ready() -> void:
 		_build_tilemap()
 	else:
 		queue_redraw()
+	_fx = Node2D.new()
+	_fx.z_index = 2
+	_fx.set_script(load("res://scripts/map_fx.gd"))
+	add_child(_fx)
+	if _fx.has_method("setup"):
+		_fx.setup(_use_pixels)
 
 func _can_use_pixel_tiles() -> bool:
 	for p in TEX_GRASS:
@@ -34,8 +42,8 @@ func _build_tilemap() -> void:
 	_tilemap.tile_set = _make_tileset()
 	_tilemap.rendering_quadrant_size = 32
 	add_child(_tilemap)
-	var cols := int(ceil(Config.VIEW_SIZE.x / float(TILE_SIZE)))
-	var rows := int(ceil(Config.VIEW_SIZE.y / float(TILE_SIZE)))
+	var cols := int(ceil(Config.MAP_SIZE.x / float(TILE_SIZE)))
+	var rows := int(ceil(Config.MAP_SIZE.y / float(TILE_SIZE)))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 42
 	for y in range(rows):
@@ -75,12 +83,15 @@ func _paint_marker(world_pos: Vector2, atlas_x: int) -> void:
 			_tilemap.set_cell(0, tile + Vector2i(ox, oy), 0, Vector2i(atlas_x, 0))
 
 func _draw() -> void:
+	# 像素层之下仍画实心底，避免 TileMap 失败时白屏/空屏
+	draw_rect(Rect2(Vector2.ZERO, Config.MAP_SIZE), Color("386640"))
 	if _use_pixels:
 		return
-	draw_rect(Rect2(Vector2.ZERO, Config.VIEW_SIZE), Color(0.22, 0.40, 0.24))
 	var pts: Array[Vector2] = Config.PATH_POINTS
 	for i in range(pts.size() - 1):
-		draw_line(pts[i], pts[i + 1], Color(0.45, 0.42, 0.33), Config.PATH_HALF_WIDTH * 2.0 + 6.0)
-		draw_line(pts[i], pts[i + 1], Color(0.78, 0.70, 0.50), Config.PATH_HALF_WIDTH * 2.0)
-	draw_circle(pts[0], 24.0, Color(0.25, 0.75, 0.30))
-	draw_circle(pts[pts.size() - 1], 24.0, Color(0.85, 0.25, 0.25))
+		draw_line(pts[i], pts[i + 1], Color(0.42, 0.36, 0.22), Config.PATH_HALF_WIDTH * 2.0 + 10.0)
+		draw_line(pts[i], pts[i + 1], Color("C7B380"), Config.PATH_HALF_WIDTH * 2.0)
+	draw_circle(pts[0], 34.0, Color(0.18, 0.55, 0.22, 0.85))
+	draw_circle(pts[0], 22.0, Color(0.35, 0.85, 0.35))
+	draw_circle(pts[pts.size() - 1], 36.0, Color(0.55, 0.18, 0.12, 0.85))
+	draw_circle(pts[pts.size() - 1], 22.0, Color("BF4A2F"))

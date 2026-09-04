@@ -18,7 +18,48 @@ static func load_texture(race: String, unit_id: int) -> Texture2D:
 	var p := texture_path(race, unit_id)
 	if ResourceLoader.exists(p):
 		return load(p) as Texture2D
-	# 龙族进化形态复用同系幼龙贴图（0/4/7→0，1/5/8→1，2/6/9→2，3/10/11→0）
+	# 人族军衔 / 法师：复用基础贴图（CO-041 已无火枪）
+	if race == "human":
+		if unit_id >= 10 and unit_id <= 19:
+			p = texture_path(race, 0)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		if unit_id in [20, 21, 22, 23]:
+			p = texture_path(race, 1)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		if unit_id == 8:
+			p = texture_path(race, 8)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+			p = texture_path(race, 4)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+			p = texture_path(race, 1)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		if unit_id in [50, 51]:
+			p = texture_path(race, 4)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		if unit_id in [60, 61]:
+			p = texture_path(race, 5)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		if unit_id in [70, 71]:
+			p = texture_path(race, 6)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		# 直购基础：农民/站若缺图不回落到弓手
+		if unit_id == 5:
+			p = texture_path(race, 5)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+		if unit_id == 6:
+			p = texture_path(race, 6)
+			if ResourceLoader.exists(p):
+				return load(p) as Texture2D
+	# 龙族进化 / 彩蛋回落（专图已在上方命中则不会走到这里）
 	if race == "dragon":
 		var fallback := 0
 		if unit_id in [1, 5, 8]:
@@ -26,7 +67,19 @@ static func load_texture(race: String, unit_id: int) -> Texture2D:
 		elif unit_id in [2, 6, 9]:
 			fallback = 2
 		elif unit_id in [3, 10, 11]:
+			fallback = 3 if ResourceLoader.exists(texture_path(race, 3)) else 0
+		elif unit_id == 12:
+			fallback = 3 if ResourceLoader.exists(texture_path(race, 3)) else 0
+		elif unit_id == 13:
 			fallback = 0
+		elif unit_id == 15:
+			fallback = 14
+		elif unit_id == 16:
+			fallback = 15 if ResourceLoader.exists(texture_path(race, 15)) else 14
+		elif unit_id == 17:
+			fallback = 16 if ResourceLoader.exists(texture_path(race, 16)) else 14
+		elif unit_id == 14:
+			fallback = 16 if ResourceLoader.exists(texture_path(race, 16)) else 0
 		p = texture_path(race, fallback)
 		if ResourceLoader.exists(p):
 			return load(p) as Texture2D
@@ -38,28 +91,51 @@ static func load_enemy_texture(enemy_id: int) -> Texture2D:
 		return null
 	return load(p) as Texture2D
 
-# 分帧目录：assets/pixels/{race}/unit_{id}_anim/{idle|walk|attack}_N.png
+# 分帧目录：assets/pixels/{race}/unit_{id}_anim/{idle|walk|fly|attack|death}_N.png
 static func anim_dir(race: String, unit_id: int) -> String:
 	return "res://assets/pixels/%s/unit_%d_anim" % [race, unit_id]
+
+## 公开：分帧 / Path A 木偶贴图。
+## 动画帧默认走磁盘，避免 .import / .godot 缓存旧静帧导致「翅不扇」。
+static func load_disk_tex(path: String, prefer_disk: bool = false) -> Texture2D:
+	if not prefer_disk and ResourceLoader.exists(path):
+		var t := load(path) as Texture2D
+		if t != null:
+			return t
+	var abs_path := path
+	if path.begins_with("res://") or path.begins_with("user://"):
+		abs_path = ProjectSettings.globalize_path(path)
+	if FileAccess.file_exists(path) or FileAccess.file_exists(abs_path):
+		var use := abs_path if FileAccess.file_exists(abs_path) else path
+		var img := Image.load_from_file(use)
+		if img != null and not img.is_empty():
+			return ImageTexture.create_from_image(img)
+	return null
+
 
 static func load_anim_frames(race: String, unit_id: int) -> Dictionary:
 	var out := {}
 	if unit_id < 0:
 		return out
 	var base := anim_dir(race, unit_id)
-	for anim in ["idle", "walk", "attack"]:
+	var max_frames := 16 if (race == "dragon" and unit_id in [14, 15, 16, 17]) else 8
+	for anim in ["idle", "walk", "fly", "attack", "death"]:
 		var frames: Array = []
-		for i in range(0, 8):
+		for i in range(0, max_frames):
 			var p := "%s/%s_%d.png" % [base, anim, i]
-			if ResourceLoader.exists(p):
-				var tex := load(p) as Texture2D
-				if tex != null:
-					frames.append(tex)
+			# 梦龙等频繁重装的帧：强制磁盘，防 import 缓存静帧
+			var tex: Texture2D = load_disk_tex(p, true)
+			if tex != null:
+				frames.append(tex)
 			else:
 				break
 		if not frames.is_empty():
 			out[anim] = frames
 	return out
+
+
+static func _load_tex(path: String) -> Texture2D:
+	return load_disk_tex(path)
 
 static func foot_offset(tex: Texture2D = null) -> Vector2:
 	# Sprite2D 默认以中心对齐；脚底约在贴图高度 * SPRITE_FOOT_RATIO。
@@ -87,7 +163,7 @@ static func attack_kind(kind: String) -> String:
 			return "melee"
 		"single", "splash", "aa", "spike":
 			return "ranged"
-		"fly":
+		"fly", "spell":
 			return "breath"
 		"charge":
 			return "charge"
@@ -103,7 +179,7 @@ static func sfx_for_attack(kind: String, race: String) -> Dictionary:
 		"ranged":
 			return {"wind": "ranged_shot", "hit": "", "foot": "foot_light"}
 		"breath":
-			return {"wind": "charge_release", "hit": "impact_light", "foot": "fly_whoosh"}
+			return {"wind": "dragon_breath" if race == "dragon" else "charge_release", "hit": "impact_light", "foot": "fly_whoosh"}
 		"charge":
 			return {"wind": "charge_release", "hit": "impact_med", "foot": "crystal_clink"}
 		"aura":

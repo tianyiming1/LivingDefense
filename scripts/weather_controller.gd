@@ -94,8 +94,8 @@ func _make_particles(col: Color, amount: int, vel: Vector2, lifetime: float) -> 
 	p.preprocess = lifetime
 	p.explosiveness = 0.0
 	p.randomness = 0.4
-	p.visibility_rect = Rect2(-100, -100, Config.VIEW_SIZE.x + 200, Config.VIEW_SIZE.y + 200)
-	p.position = Config.VIEW_SIZE * 0.5
+	p.visibility_rect = Rect2(-100, -100, Config.MAP_SIZE.x + 200, Config.MAP_SIZE.y + 200)
+	p.position = Config.MAP_SIZE * 0.5
 	p.process_material = _particle_mat(col, vel, lifetime)
 	return p
 

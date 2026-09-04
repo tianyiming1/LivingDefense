@@ -1,4 +1,4 @@
-﻿"""下载模型权重（断点续传）。默认写入 D:\\AI_models\\（统一模型目录）。"""
+"""下载模型权重（断点续传）。默认写入 D:\\AI_models\\（统一模型目录）。"""
 import argparse
 from huggingface_hub import snapshot_download
 

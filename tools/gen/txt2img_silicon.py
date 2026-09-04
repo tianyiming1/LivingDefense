@@ -1,4 +1,4 @@
-﻿"""LCM 文生图：硅基流动概念图（4 步快速）"""
+"""LCM 文生图：硅基流动概念图（4 步快速）"""
 import argparse, sys, random
 import torch
 from diffusers import StableDiffusionPipeline, LCMScheduler

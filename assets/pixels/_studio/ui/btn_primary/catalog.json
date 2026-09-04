@@ -1,0 +1,17 @@
+{
+  "asset_id": "ui/btn_primary",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T14:47:32",
+      "note": "comfy_t2i_ui_btn_primary",
+      "source": "comfy_img2img_pick004",
+      "seed": 1276518519,
+      "prompt": "pixel art wide primary UI button, hammered bronze metal bar with wood backing, raised bevel, fort command style, flat readable, solid black background, no text no characters",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/ui/btn_primary/001_raw.png",
+      "game": "assets/pixels/_studio/ui/btn_primary/001_game.png"
+    }
+  ]
+}

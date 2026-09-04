@@ -1,0 +1,29 @@
+---
+description: 设计逻辑五关 + 战场视口/底栏安全带——逻辑类与 HUD/镜头任务必看
+alwaysApply: true
+---
+
+# 设计逻辑与战场视口（必看纪律）
+
+凡涉及 **玩法规则自洽、UI/HUD、镜头、比例、挡路、白屏、布局**，开工前必须：
+
+1. 读 `.cursor/skills/design-logic/SKILL.md`（逻辑五关）  
+2. 读 `docs/纪律_设计逻辑与战场视口.md`（视口/底栏铁律 + 验收）  
+3. 需要历史坐标时对照 `docs/变更单/CO-037_visual_declutter_and_art.md` §5  
+4. **Game Studio 会话**：读 `.cursor/agents/game-studio-agent.md` 总纲 §8 + 激活规则（挡路/比例路由）
+
+未读上述文件 = **Skill 合规 FAIL**，不得宣称完成。
+
+## 三条不可违反
+
+1. **同一律**：`VIEW_SIZE` / `HUD_BOTTOM_PX` / `project.godot` 窗口基准口径一致；禁止偷换「比例」。  
+2. **矛盾律**：常驻底栏不得与「路径可见可操作」同真——用安全带 + 镜头安全区（或等价可验证方案）。  
+3. **充足理由律**：修显示/挡路必须有截图或 `tools/hud_fail_verify.gd`（及后继）证据；禁止口头「差不多」。
+
+## 已证伪默认方案
+
+本机 `gl_compatibility` 下 **SubViewport 嵌战场曾白屏** → 无新证据不得当默认修法。
+
+## 审核裁定须点名
+
+- 逻辑五关 / 视口同一律 / 安全带挡路：PASS 或 FAIL（缺证据=FAIL）

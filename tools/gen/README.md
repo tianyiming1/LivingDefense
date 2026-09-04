@@ -1,21 +1,32 @@
-﻿# 本地 AI 出图管线（tools/gen/）
-> 环境：RTX 4060 8GB / Python 3.12 / torch+diffusers（装入工作区 .pyenv，沙箱只允许写工作区）
-> 用途：生成四族概念图（当前：硅基流动主线）供美术定稿参考
+# 本地 AI 出图管线（tools/gen/）
+> 环境：RTX 4060 8GB / Python 3.12 / torch+diffusers + **ComfyUI SDXL**
+> 龙人定稿风格锚点：`_studio/dragon/picks/pick_004_flame_drake_*`（熔岩橙鳞 + 紫翅爪）
 
-## 脚本
-- `download_model.py` — 下载 LCM Dreamshaper v7 权重（断点续传）→ `D:\AI_models\lcm_dreamshaper_v7\`
-- `gen_unit_local.py` — 像素精灵本地出图 → `D:\AI_models\pixel_sprite\`
-- `txt2img_silicon.py` — 单张出图：`python txt2img_silicon.py --prompt "..." --out out.png`
-- `txt2img_batch.py` — 批量出图：读 prompts_silicon.json，场景×seed 循环，输出 docs/ai_concepts/
-- `prompts_silicon.json` — 硅基 7 场景 + 菌族对照 1 场景；negative + style_suffix 公共
+## 主路径（推荐）：ComfyUI SDXL + 像素 LoRA → `_studio`
+
+```bat
+tools\gen\comfy_pixel_gen.cmd
+python tools/gen/comfy_pixel_gen.py --preset flame_drake --n 4 --open
+python tools/gen/comfy_pixel_gen.py --list-presets
+python tools/gen/comfy_pixel_gen.py --ingest D:\GameWorkSpace\dragonman --archive dragon/longren
+```
+
+- 引擎：`D:\softwares\ComfyUI`（脚本可自动拉起 8188）
+- 权重：`Juggernaut-XL_v9` + LoRA `pixel-art-lora-sdxl`（也可用 `--ckpt zavychromaxl_v100.safetensors`）
+- 预设：`tools/gen/prompts_comfy.json`（默认 `flame_drake` = pick_004 风格）
+- 产出：只进 `assets/pixels/_studio/dragon/longren/`（`NNN_raw` / `NNN_game`），**不写 ship**
+- 选定后：`python tools/gen/archive_candidates.py --promote dragon/longren N`
+
+旧入口 `D:\GameWorkSpace\生图.cmd` 仍可用；项目内请用上面命令，保证进 `_studio`。
+
+## 其它脚本
+- `download_model.py` — LCM / 其它 HF 权重 → `D:\AI_models\`
+- `gen_unit_local.py` — `pixel_sprite` 真像素侧视（肢易乱，备选）
+- `txt2img_silicon.py` / `txt2img_batch.py` — LCM 概念图
+- `import_ai_sprite.py` — 手动把 raw 放 `_studio/incoming/` 再导入
+- `reimport_pick004.py` — pick_004 干净重导入
 
 ## 运行约定
-- 所有 python 用：python312（C:\Users\asus\AppData\Local\Programs\Python\Python312\python.exe）
-- PYTHONPATH 需包含 .pyenv（pip --target 安装区），或脚本放 .pyenv 同级以 sys.path 注入
-- 权重统一目录 = `D:\AI_models\`（不写入项目）
-  - LCM：`D:\AI_models\lcm_dreamshaper_v7\`（HF: SimianLuo/LCM_Dreamshaper_v7）
-  - 像素精灵：`D:\AI_models\pixel_sprite\`（HF: Onodofthenorth/SD_PixelArt_SpriteSheet_Generator）
-
-## 验收口径（美术线）
-- 出图 ≠ 定稿：人工审 → 按 ART_GUIDE §2 精确色板（硅基 #6FD3E7/#F5F9FF/#A8E8F5）比对 → 可用的进 docs/ai_concepts/approve/
-- 引擎落地仍以 draw_* 等价公式为准（AI 图只做风格参考，不进引擎管线）
+- Python：`C:\Users\asus\AppData\Local\Programs\Python\Python312\python.exe`
+- 权重：`D:\AI_models\`（diffusers）+ `D:\softwares\ComfyUI\models\`（SDXL）
+- 出图 ≠ 定稿：先审肢（`ANATOMY.md`）再 promote；`commercial_ok` 写 PROVENANCE

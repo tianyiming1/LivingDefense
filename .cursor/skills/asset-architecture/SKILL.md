@@ -36,10 +36,15 @@ assets/pixels/
   _studio/                        # NEVER referenced by Godot load paths
     incoming/                     # drop zone; clear after import
     dragon/
-      longren/ whelp/ drake/ adult/
-      picks/                      # approved refs (e.g. pick_004_*)
+      longren/                    # 龙人族 — 见 longren/INDEX.md
+        magma/ frost/ storm/ stone/ jade/
+          candidates/ picks/ pose/
+          anim/{idle|walk|attack}/ ui/
+        （根 NNN_* = legacy 未分类池，只读）
+      whelp/ drake/ adult/
+      picks/                      # 全族共享锚点（e.g. pick_004_*）
       refs/                       # sheets / moodboards
-      anim_wip/                   # experimental frames
+      anim_wip/                   # 跨种实验帧（优先改用亚种 anim/）
       ANATOMY.md
     enemies/ref/
 ```
@@ -73,18 +78,23 @@ Legacy names `_candidates` and `_incoming` are **retired**. Scripts use `_studio
 
 | Step | Command / module |
 |------|------------------|
-| Drop raw | `_studio/incoming/{race}/unit_N.png` |
-| Local gen | `python tools/gen/gen_unit_local.py --id …` → archives under `_studio/` |
+| **ComfyUI SDXL（推荐）** | `python tools/gen/comfy_pixel_gen.py --preset flame_drake --archive dragon/longren/magma` |
+| Drop raw | `_studio/incoming/dragon/longren/{id}/…` |
+| Local gen (pixel_sprite) | `python tools/gen/gen_unit_local.py --id …` → archives under `_studio/` |
 | Import | `python tools/gen/import_ai_sprite.py --id …` |
 | List | `python tools/gen/archive_candidates.py --list` |
-| Promote | `python tools/gen/archive_candidates.py --promote ASSET_ID INDEX` |
+| Promote | `python tools/gen/archive_candidates.py --promote dragon/longren/magma N`（再拷 ship `dragon/unit_1`） |
 | Provenance | `python tools/gen/record_provenance.py --id … --source local_sd --commercial-ok` |
 | Full rebuild (rare) | `python tools/gen/reorganize_pixels.py` — **destructive** to old trees |
 
+ComfyUI 安装与权重在仓库外：`D:\softwares\ComfyUI`（Juggernaut-XL + pixel-art-lora-sdxl）。Diffusers 权重仍在 `D:\AI_models\`。
+
 Dragon classification IDs for archive folders:
 
-- `dragon/longren` · `dragon/whelp` · `dragon/drake` · `dragon/adult`
-- Approved look: `_studio/dragon/picks/pick_004_flame_drake_*` → ship `dragon/unit_1.png`
+- `dragon/longren/{magma|frost|storm|stone|jade}` — 龙人五亚种（焰鳞/霜棱/雷冠/岩夯/碧枝）
+- Legacy flat `dragon/longren` — 未分类历史池，**勿再写入**
+- `dragon/whelp` · `dragon/drake` · `dragon/adult`
+- Approved look: `_studio/dragon/picks/pick_004_flame_drake_*` → 焰鳞 `longren/magma/picks/` → ship `dragon/unit_1.png`
 
 Models live under `D:\AI_models\` (not inside the repo).
 

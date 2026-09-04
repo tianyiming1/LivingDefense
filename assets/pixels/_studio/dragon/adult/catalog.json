@@ -4,50 +4,14 @@
     {
       "index": 1,
       "tag": "001",
-      "created": "2026-09-03T10:59:09",
-      "note": "procedural_anatomy",
-      "source": "draw_dragon_anatomy",
-      "seed": null,
-      "prompt": "procedural guaranteed limbs",
-      "flip_x": false,
-      "raw": "assets/pixels/_studio/dragon/adult/001_raw.png",
-      "game": "assets/pixels/_studio/dragon/adult/001_game.png"
-    },
-    {
-      "index": 2,
-      "tag": "002",
-      "created": "2026-09-03T10:59:39",
-      "note": "sil_i2i_s0.4",
-      "source": "gen_from_silhouette",
-      "seed": 1305,
-      "prompt": "large orange adult dragon quadruped pixel art, exactly four thick legs, large wings, one head one tail, side view full body, solid dark purple background",
-      "flip_x": false,
-      "raw": "assets/pixels/_studio/dragon/adult/002_raw.png",
-      "game": "assets/pixels/_studio/dragon/adult/002_game.png"
-    },
-    {
-      "index": 3,
-      "tag": "003",
-      "created": "2026-09-03T10:59:40",
-      "note": "sil_i2i_s0.4",
-      "source": "gen_from_silhouette",
-      "seed": 1318,
-      "prompt": "large orange adult dragon quadruped pixel art, exactly four thick legs, large wings, one head one tail, side view full body, solid dark purple background",
-      "flip_x": false,
-      "raw": "assets/pixels/_studio/dragon/adult/003_raw.png",
-      "game": "assets/pixels/_studio/dragon/adult/003_game.png"
-    },
-    {
-      "index": 4,
-      "tag": "004",
-      "created": "2026-09-03T11:01:08",
+      "created": "2026-09-03T16:49:32",
       "note": "procedural_anatomy_v2",
       "source": "draw_dragon_anatomy",
       "seed": null,
       "prompt": "procedural guaranteed limbs v2",
       "flip_x": false,
-      "raw": "assets/pixels/_studio/dragon/adult/004_raw.png",
-      "game": "assets/pixels/_studio/dragon/adult/004_game.png"
+      "raw": "assets/pixels/_studio/dragon/adult/001_raw.png",
+      "game": "assets/pixels/_studio/dragon/adult/001_game.png"
     }
   ]
 }

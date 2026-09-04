@@ -1,0 +1,17 @@
+{
+  "asset_id": "ui/hq_plaque",
+  "items": [
+    {
+      "index": 1,
+      "tag": "001",
+      "created": "2026-09-03T14:47:54",
+      "note": "comfy_t2i_ui_hq_plaque",
+      "source": "comfy_img2img_pick004",
+      "seed": 1417936980,
+      "prompt": "pixel art small wooden HQ plaque shield emblem, fortress gate icon silhouette only, warm wood and iron, no letters, solid black background, flat game HUD ornament",
+      "flip_x": false,
+      "raw": "assets/pixels/_studio/ui/hq_plaque/001_raw.png",
+      "game": "assets/pixels/_studio/ui/hq_plaque/001_game.png"
+    }
+  ]
+}

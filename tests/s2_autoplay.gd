@@ -235,7 +235,7 @@ func _run() -> void:
 		if not ok:
 			return
 	# ???????
-	check(main.state == ST_WIN, "win_state_reached_12_waves")
+	check(main.state == ST_WIN, "win_state_reached_total_waves")
 	check(int(main.lives) > 0, "lives_positive_at_win")
 	check(money_min_seen >= 0, "money_never_negative")
 	check(death_emit_max_per_unit <= 1, "death_signal_single_emit_fungus")
