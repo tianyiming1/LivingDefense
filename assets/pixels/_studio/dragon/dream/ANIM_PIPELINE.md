@@ -1,9 +1,8 @@
 # 梦龙动画管线（现行 · 过审强制）
 
-> **2026-09-04 裁定：`gen_dream_self_flap.py`（mesh / pivot）= FAIL**（用户：拖影 +「根本不行」）。  
-> 坏帧已隔离：`dream/self_flap/_FAIL_quarantine/`。  
-> **现行可玩：Path A 木偶**（`prefer_frames: false`）+ 静帧立绘；**禁用**自生成 16f 当真交付。  
-> **禁用 WorkBuddy**。真 16 帧只接受手绘 promote。
+> **2026-09-04 裁定：自生成 mesh/pivot、Comfy i2i、WorkBuddy = FAIL**（用户未过审 → **已直接删除**）。  
+> **现行可玩：Path A 木偶**（`prefer_frames: false`）+ 静帧立绘。  
+> 真 16 帧只接受手绘 promote。
 
 ## 现行（可玩占位）
 

@@ -1,1 +1,0 @@
-state=attack puppet=true
