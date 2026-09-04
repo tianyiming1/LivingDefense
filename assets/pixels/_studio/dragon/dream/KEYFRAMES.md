@@ -82,7 +82,7 @@ dream/hand_anim/
 |----|----------|
 | 14 | `whelp/approved/006_game.png` |
 | 15 | `drake/approved/003_game.png` |
-| 16/17 | `picks/pick_dream_menglong_game.png` / `approved/042_game.png` |
+| 16/17 | `approved/042_game.png`（`pick_dream_menglong` 已否决删除） |
 
 洋葱皮：可用 `hand_anim/unit_14/_templates/` 里的半透明底稿。
 
@@ -96,6 +96,8 @@ dream/hand_anim/
 
 ## 明确 FAIL（已删除，勿再做）
 
+- `pick_dream_menglong_*`（用户否决预览）
+- 果冻整图拧弯 / mesh-warp 假扇翅
 - 程序剪影拼贴（矩形挖空、错层）
 - Comfy 锁站姿假分帧
 - 未过 `promote` 门禁的任何帧

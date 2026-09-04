@@ -2,10 +2,11 @@
 
 | 项 | 裁定 |
 |----|------|
-| 立绘 / 源 | `size_ladder/unit_{14..17}_s*.png`；成年亦对齐 `approved/042_game.png` |
-| 自生成 / Comfy / WorkBuddy 帧 | **FAIL · 已删除**（勿复活） |
-| **现行可玩** | Path A 木偶 `prefer_frames: false` |
-| **真分帧出口** | 仅手绘 → `promote_dream_hand_anim.py` |
+| `pick_dream_menglong_*` | **FAIL · 已删** |
+| 成年暂存 | `approved/042_*` |
+| 假动画（果冻/mesh/Comfy/WB） | **FAIL · 已删**；禁止复活 |
+| **现行可玩** | 静帧 + Path A 占位（非交付质量） |
+| **真分帧** | 仅手绘 / 真图生视频抽帧（过审后） |
 
 ```bash
 python tools/gen/gen_dream_puppet_parts.py --units 14,15,16,17

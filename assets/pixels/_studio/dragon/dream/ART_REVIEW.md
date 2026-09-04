@@ -9,7 +9,9 @@
 
 | 阶 | 裁定 |
 |----|------|
-| 14–17 | 已恢复 `size_ladder/unit_*_s*.png` → ship（96×108）；**勿用**空的 `clean_*.png` |
+| `pick_dream_menglong_*` | **FAIL · 已删**（用户：不行） |
+| 14–17 ship | `size_ladder/unit_*_s*.png`；空 `clean_*` 已删 |
+| 成年锚 | 暂用 `approved/042_*`（若也不行再说） |
 
 ## 动作帧
 

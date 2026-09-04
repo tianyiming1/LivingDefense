@@ -193,7 +193,7 @@
       "denoise": 0.62,
       "lora_strength": 0.12,
       "style_lock": false,
-      "ref": "assets/pixels/_studio/dragon/dream/picks/pick_dream_menglong_raw.png",
+      "ref": "assets/pixels/_studio/dragon/dream/approved/042_raw.png",
       "negative": "hip wings, secondary wings, four wings, two tails, multiple tails, adult large body, armored, humanoid, woman face, orange lava, fire, weapon, floating feet, fragmented body, text, watermark, multiple characters",
       "prompt": "BABY dream dragon WHELP 梦幼龙, SAME creature DNA as adult dream dragon but MUCH SMALLER rounder chibi body ~60 percent size, oversized head fins wing-ears, short stubby limbs, short upturned single tail, SMALL folded translucent ice-blue wings from upper back only EXACTLY ONE pair, pale ice-cyan white jagged crystalline scales deep purple membranes, sparse stardust 0-2 motes, bipedal beast dragon NOT humanoid, three-quarter facing left full body, solid black background, jagged crystalline voxel pixel style"
     },
@@ -204,7 +204,7 @@
       "denoise": 0.42,
       "lora_strength": 0.1,
       "style_lock": false,
-      "ref": "assets/pixels/_studio/dragon/dream/picks/pick_dream_menglong_raw.png",
+      "ref": "assets/pixels/_studio/dragon/dream/approved/042_raw.png",
       "negative": "hip wings, secondary wings, four wings, two tails, multiple tails, chubby baby, chibi, humanoid, woman face, orange lava, fire, weapon, floating feet, fragmented body, text, watermark, multiple characters",
       "prompt": "ADOLESCENT dream dragon DRAKE 梦亚龙, SAME DNA as adult dream dragon slightly leaner ~85 percent size, elongated head fins, wings SPREAD wider ice-blue edges deep purple membranes EXACTLY ONE pair from upper back, EXACTLY ONE long curved spiked tail, ice-cyan white jagged crystalline scales, stardust ring 3-6 motes around body, bipedal beast dragon NOT humanoid, three-quarter facing left full body, solid black background, jagged crystalline voxel pixel style"
     }
