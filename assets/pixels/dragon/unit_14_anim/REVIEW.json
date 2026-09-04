@@ -1,0 +1,27 @@
+{
+  "pack": "dragon\\unit_14_anim",
+  "status": "approved",
+  "level": "audit",
+  "audited_at": "2026-09-04 11:59:16",
+  "tool": "tools/gen/audit_anim_pack.py",
+  "reasons": [],
+  "notes": [
+    "palette overridden by pack palette.json (16 colors)"
+  ],
+  "metrics": {
+    "canvas": "96x108",
+    "idle_frames": 16,
+    "walk_frames": 16,
+    "fly_frames": 16,
+    "attack_frames": 4,
+    "death_frames": 4,
+    "idle_bottom_std": 0.0,
+    "walk_bottom_std": 0.0,
+    "walk_loop_iou": 0.82,
+    "fly_bottom_std": 0.0,
+    "fly_loop_iou": 0.82,
+    "attack_bottom_std": 0.0,
+    "death_bottom_std": 0.0,
+    "off_palette": 0.0
+  }
+}
