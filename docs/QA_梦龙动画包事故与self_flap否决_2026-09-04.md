@@ -26,9 +26,10 @@
 | 11:55:58 | audit | unit_14 重建并过审 APPROVED（0 reasons）+ S1 冒烟 0 错 |
 | 11:56:23/41 | `68b7e7c`/`f467dd5` | Cursor 会话把 unit_14 重建成果打包提交后又整体 purge（"menglong delete, user FAIL"） |
 
-**待用户裁决**：用户否决的是 self_flap GIF（动画生成质量），还是整个梦龙（menglong）形象方向？
-- 若只是前者 → unit_14..17 hand_anim 帧包应恢复上线（unit_14 已验证全链路；15/16 death 帧扁平度、17 顶部裁切待返工）
-- 若是后者 → 四龙回退程序化动画，梦龙线整体归档
+**用户裁决（2026-09-04 12:00）**：否决范围 = **仅 self_flap 动画路线**；梦龙（menglong）形象与 hand_anim 帧包保留。
+- 已执行：unit_14_anim 重建上线（promote PASS → palette → audit APPROVED → S1 冒烟 0 错，提交 `e52b938`）
+- 返工清单：unit_15/16（death_2 扁平度不足：0.97/0.91，需 ≥ idle×1.15）；unit_17（大量顶部裁切 top_clip≤81px、fly 锚点高于 idle 的关系不成立——需整体下移重锚）
+- 分工规矩（用户确认）：**Cursor 管生成（WIP 限 `_studio/`），WorkBuddy 管审核/正式目录/引擎/git**；删除正式资产必须用户确认
 
 ## 三、已落防线
 
