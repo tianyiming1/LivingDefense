@@ -2,14 +2,11 @@
 
 | 项 | 裁定 |
 |----|------|
-| 立绘 / 源 | **自有过审** `dream/approved/042_game.png`（**禁用 WorkBuddy**） |
-| **飞行 idle/fly ×16** | `tools/gen/gen_dream_self_flap.py` 自生成完整扇翅（升→降→升）；8 FPS / ~125ms；整圈约 2s |
-| **walk** | = fly 拷贝 |
-| **attack/death** | 自扇翅相位抽样 |
-| 运行时 | `prefer_frames: true` + `fly_sheet` AtlasTexture；禁 WorkBuddy 路径 |
-| 证据 | `dream/self_flap/SELF_FLAP_GATE_17.gif` · `SELF_FLAP_STRIP.png` |
+| 立绘 / 源 | `size_ladder/unit_{14..17}_s*.png`（**禁用**空 `clean_*.png`）；成年亦对齐 `approved/042_game.png` |
+| **自生成 16f** | **FAIL**（mesh/pivot）；已隔离 `self_flap/_FAIL_quarantine/` |
+| **现行可玩** | Path A 木偶 `prefer_frames: false` |
+| **真分帧出口** | 仅手绘 → `promote_dream_hand_anim.py` |
 
-安装：
 ```bash
-python tools/gen/gen_dream_self_flap.py --units 14,15,16,17
+python tools/gen/gen_dream_puppet_parts.py --units 14,15,16,17
 ```

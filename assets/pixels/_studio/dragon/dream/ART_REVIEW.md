@@ -3,28 +3,29 @@
 | 字段 | 值 |
 |------|-----|
 | 日期 | 2026-09-04 |
-| 规格 | CO-046 · WorkBuddy `2026-09-04-09-00-43` |
+| 规格 | CO-046 |
 
 ## 立绘
 
 | 阶 | 裁定 |
 |----|------|
-| 14–17 | 立绘源可用；局内验收另计 |
+| 14–17 | 已恢复 `size_ladder/unit_*_s*.png` → ship（96×108）；**勿用**空的 `clean_*.png` |
 
 ## 动作帧
 
 | 项 | 裁定 | 说明 |
 |----|------|------|
-| WorkBuddy godot_1 GIF / 8 帧 | **已弃用（用户禁止）** | 不再引用 WorkBuddy |
-| 自生成完整扇翅 | **现行** | `gen_dream_self_flap.py` ← `approved/042_game.png`；16f 升→降→升；`self_flap/SELF_FLAP_GATE_17.gif` |
-| 局内扇翅 | **FAIL（用户）** | 「翅膀完全没煽动」——曾被 `.import` 旧静帧缓存 + 静帧锁死误伤 |
-| 过审 | **FAIL** | 未过审；禁止宣称 PASS / 禁止 promote |
+| WorkBuddy | **弃用** | 用户禁止 |
+| self_flap mesh / pivot 16f | **FAIL** | 拖影、掏空身体、叠影；用户「根本不行」 |
+| 坏帧 | 已隔离 | `self_flap/_FAIL_quarantine/` |
+| Path A 木偶 | **现行占位** | `prefer_frames:false`；14/15 双翅；16/17 full_body bob |
+| 真 16 帧 | **未交付** | 仅手绘 `KEYFRAMES.md` + promote 可过审 |
 
 ```
 ### 审核裁定
-- 对象：梦龙 WorkBuddy 飞帧进局
-- Skill 合规：CONDITIONAL
-- 纪律/闸门：FAIL（局内翅不扇 = 未交付可玩动画）
-- 结论：FAIL · 未过审
-- 处置：已改磁盘直读分帧、清 import 缓存、重装 8 帧；须 F5 复验扇翅后才能 Conditionally 再议
+- 对象：梦龙自生成 16 帧扇翅（mesh + pivot）
+- Skill 合规：PASS（已读必读）
+- 纪律/闸门：FAIL（拖影/掏空/不可读；违反「禁双翅叠影」与可玩动画交付）
+- 结论：FAIL
+- 处置：已撤 ship 坏帧、回滚静帧+Path A；禁止再宣称 self_flap 过审；真动画改手绘或另开变更单
 ```

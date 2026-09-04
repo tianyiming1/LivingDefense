@@ -1,0 +1,12 @@
+{
+  "pack": "human/unit_2_anim",
+  "status": "approved",
+  "level": "baseline_v1",
+  "audited_at": "2026-09-04 11:41:30",
+  "tool": "baseline stamp 2026-09-04 (legacy packs in use; engine gate introduced)",
+  "reasons": [],
+  "notes": [
+    "历史在册包：引擎自 2026-09-04 起要求 REVIEW.json=approved 才播放，此戳为基线过渡标记；新包必须走 audit_anim_pack.py 过审"
+  ],
+  "metrics": {}
+}

@@ -95,6 +95,30 @@ static func load_enemy_texture(enemy_id: int) -> Texture2D:
 static func anim_dir(race: String, unit_id: int) -> String:
 	return "res://assets/pixels/%s/unit_%d_anim" % [race, unit_id]
 
+# 敌族分帧目录：assets/pixels/enemies/enemy_{id}_anim/（契约同 docs/动画_素材契约与审核_v1.md）
+static func enemy_anim_dir(enemy_id: int) -> String:
+	return "res://assets/pixels/enemies/enemy_%d_anim" % enemy_id
+
+## 动画帧包审核门禁（docs/动画_素材契约与审核_v1.md）：
+## 包目录必须存在 REVIEW.json 且 status == "approved"，引擎才播放该包帧。
+## REVIEW.json 只允许由 tools/gen/audit_anim_pack.py（PASS）或基线标记脚本写入。
+static func is_pack_approved_at(dir_path: String) -> bool:
+	var p := "%s/REVIEW.json" % dir_path
+	if not FileAccess.file_exists(p):
+		return false
+	var f := FileAccess.open(p, FileAccess.READ)
+	if f == null:
+		return false
+	var data = JSON.parse_string(f.get_as_text())
+	if typeof(data) != TYPE_DICTIONARY:
+		return false
+	return str((data as Dictionary).get("status", "")) == "approved"
+
+static func is_anim_pack_approved(race: String, unit_id: int) -> bool:
+	if unit_id < 0:
+		return false
+	return is_pack_approved_at(anim_dir(race, unit_id))
+
 ## 公开：分帧 / Path A 木偶贴图。
 ## 动画帧默认走磁盘，避免 .import / .godot 缓存旧静帧导致「翅不扇」。
 static func load_disk_tex(path: String, prefer_disk: bool = false) -> Texture2D:
@@ -113,16 +137,12 @@ static func load_disk_tex(path: String, prefer_disk: bool = false) -> Texture2D:
 	return null
 
 
-static func load_anim_frames(race: String, unit_id: int) -> Dictionary:
+static func load_anim_frames_at(dir_path: String, max_frames: int) -> Dictionary:
 	var out := {}
-	if unit_id < 0:
-		return out
-	var base := anim_dir(race, unit_id)
-	var max_frames := 16 if (race == "dragon" and unit_id in [14, 15, 16, 17]) else 8
 	for anim in ["idle", "walk", "fly", "attack", "death"]:
 		var frames: Array = []
 		for i in range(0, max_frames):
-			var p := "%s/%s_%d.png" % [base, anim, i]
+			var p := "%s/%s_%d.png" % [dir_path, anim, i]
 			# 梦龙等频繁重装的帧：强制磁盘，防 import 缓存静帧
 			var tex: Texture2D = load_disk_tex(p, true)
 			if tex != null:
@@ -132,6 +152,27 @@ static func load_anim_frames(race: String, unit_id: int) -> Dictionary:
 		if not frames.is_empty():
 			out[anim] = frames
 	return out
+
+
+static func load_anim_frames(race: String, unit_id: int) -> Dictionary:
+	var out := {}
+	if unit_id < 0:
+		return out
+	# 审核门禁：未过审的包不播放（返回空 = 上层回退 base 静帧/木偶）
+	if not is_anim_pack_approved(race, unit_id):
+		return out
+	var max_frames := 16 if (race == "dragon" and unit_id in [14, 15, 16, 17]) else 8
+	return load_anim_frames_at(anim_dir(race, unit_id), max_frames)
+
+
+static func load_enemy_anim_frames(enemy_id: int) -> Dictionary:
+	var out := {}
+	if enemy_id < 0:
+		return out
+	# 审核门禁：敌族帧包同样要求 REVIEW.json approved（不过审不播放）
+	if not is_pack_approved_at(enemy_anim_dir(enemy_id)):
+		return out
+	return load_anim_frames_at(enemy_anim_dir(enemy_id), 8)
 
 
 static func _load_tex(path: String) -> Texture2D:

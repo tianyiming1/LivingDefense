@@ -10,6 +10,31 @@ var walk_phase := 0.0
 var _last_foot := 0.0
 var attack_left := 0.0
 var _moving := false
+## 敌族动画帧通道（契约 docs/动画_素材契约与审核_v1.md；REVIEW.json=approved 才有帧）
+var _frames: Dictionary = {}
+var _frame_t := 0.0
+var _anim := ""
+const FPS_WALK := 10.0
+const FPS_IDLE := 4.0
+
+func _has_clip(anim: String) -> bool:
+	return _frames.has(anim) and not (_frames[anim] as Array).is_empty()
+
+func _swap_tex(tex: Texture2D) -> void:
+	if tex == null or _sprite == null:
+		return
+	if _sprite.texture == tex:
+		return
+	_sprite.texture = tex
+	_shadow.texture = tex
+	_sprite.offset = UnitSprites.foot_offset(tex)
+	_shadow.offset = _sprite.offset
+
+func _pick_frame(anim: String, phase: float) -> void:
+	if not _has_clip(anim):
+		return
+	var arr: Array = _frames[anim]
+	_swap_tex(arr[int(floor(phase)) % arr.size()] as Texture2D)
 
 func setup(tex: Texture2D, enemy_id: int) -> void:
 	_enemy_id = enemy_id
@@ -36,6 +61,12 @@ func setup(tex: Texture2D, enemy_id: int) -> void:
 	_shadow.offset = _sprite.offset
 	_apply_facing_scale()
 	_apply_shadow()
+	# 敌族动画帧（未过审/无包 → 空字典，走原程序化 bob，行为不变）
+	_frames = UnitSprites.load_enemy_anim_frames(enemy_id)
+	_frame_t = 0.0
+	_anim = "idle"
+	if _has_clip("idle"):
+		_pick_frame("idle", 0.0)
 
 func has_sprite() -> bool:
 	return _sprite != null and _sprite.texture != null
@@ -74,11 +105,27 @@ func play_death() -> void:
 	AudioController.play(sfx, global_position, 0.85 if _enemy_id >= 2 else 1.0)
 
 func _process(delta: float) -> void:
+	if _sprite == null:
+		return
+	var has_frames: bool = not _frames.is_empty()
 	if attack_left > 0.0:
 		attack_left -= delta
 		var p := 1.0 - clampf(attack_left / 0.18, 0.0, 1.0)
-		var sign: float = 1.0 if _facing_right else -1.0
-		_sprite.position = Vector2(sign * sin(p * PI) * 5.0, 0)
+		# 有攻击帧：按 3 段姿态取帧（蓄力/扑咬/收势）；无帧则沿用原位移前扑
+		if has_frames and _has_clip("attack"):
+			var n: int = (_frames["attack"] as Array).size()
+			var pose := 0
+			if p < 0.3:
+				pose = 0
+			elif p < 0.7:
+				pose = 1
+			else:
+				pose = 2
+			_pick_frame("attack", float(mini(pose, n - 1)))
+		else:
+			var sign: float = 1.0 if _facing_right else -1.0
+			_sprite.position = Vector2(sign * sin(p * PI) * 5.0, 0)
+		return
 	if _moving:
 		var spd: float = 14.0
 		if _enemy_id == 1:
@@ -88,10 +135,16 @@ func _process(delta: float) -> void:
 		else:
 			spd = 9.0
 		walk_phase += delta * spd
-		var bob: float = 2.0
-		if _enemy_id == 2:
-			bob = 1.0
-		_sprite.position.y = sin(walk_phase) * bob
+		if has_frames and _has_clip("walk"):
+			# 真分帧走路：帧播放为主，轻微 bob 增加连惯性（降低原振幅防双重抖动）
+			_frame_t += delta * FPS_WALK
+			_pick_frame("walk", _frame_t)
+			_sprite.position.y = sin(walk_phase) * 0.9
+		else:
+			var bob: float = 2.0
+			if _enemy_id == 2:
+				bob = 1.0
+			_sprite.position.y = sin(walk_phase) * bob
 		var foot: float = floorf(walk_phase / PI)
 		if foot > _last_foot:
 			_last_foot = foot
@@ -102,7 +155,12 @@ func _process(delta: float) -> void:
 			if _enemy_id == 1:
 				vol = 1.2
 			AudioController.play(f, global_position, vol)
-	elif attack_left <= 0.0:
+		return
+	# 待机
+	if has_frames:
+		_frame_t += delta * FPS_IDLE
+		_pick_frame("idle", _frame_t)
+	if attack_left <= 0.0:
 		_sprite.position = Vector2.ZERO
 
 func _apply_facing_scale() -> void:

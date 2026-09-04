@@ -9,16 +9,12 @@
     43.8
   ],
   "foot_y": 98.0,
-  "mode": "clean_static_rollback",
+  "mode": "path_a_full_body_bob",
   "full_body": true,
   "stub_r": 8,
   "parts": [
     "body"
   ],
-  "prefer_frames": true,
-  "fly_source": "self_mesh_warp_042",
-  "fly_frames": 16,
-  "fly_sheet": true,
-  "motion_ratio": 1.0,
-  "complete_action": true
+  "prefer_frames": false,
+  "reject": "self_flap_FAIL_user_rejected"
 }

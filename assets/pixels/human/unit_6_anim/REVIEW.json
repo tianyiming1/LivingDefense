@@ -1,0 +1,26 @@
+{
+  "pack": "human\\unit_6_anim",
+  "status": "approved",
+  "level": "baseline_v1",
+  "audited_at": "2026-09-04 11:43:33",
+  "tool": "tools/gen/audit_anim_pack.py",
+  "reasons": [],
+  "notes": [],
+  "metrics": {
+    "canvas": "96x108",
+    "idle_frames": 2,
+    "walk_frames": 4,
+    "fly_frames": 4,
+    "attack_frames": 3,
+    "death_frames": 3,
+    "idle_bottom_std": 0.0,
+    "walk_bottom_std": 0.5,
+    "walk_loop_iou": 0.99,
+    "fly_bottom_std": 1.0,
+    "fly_loop_iou": 0.84,
+    "attack_bottom_std": 0.0,
+    "death_bottom_std": 8.22,
+    "off_palette": 0.277
+  },
+  "protected": true
+}

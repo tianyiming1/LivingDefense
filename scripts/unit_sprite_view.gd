@@ -99,6 +99,9 @@ func _setup_dream_flap_atlas(race: String, unit_id: int) -> void:
 	_flap_n = 0
 	if unit_id not in [14, 15, 16, 17]:
 		return
+	# 审核门禁：扇翅表所在包未过审则不启用（防「不过审的素材进游戏」）
+	if not UnitSprites.is_anim_pack_approved(race, unit_id):
+		return
 	var sheet_path := "%s/fly_sheet.png" % UnitSprites.anim_dir(race, unit_id)
 	var sheet: Texture2D = UnitSprites.load_disk_tex(sheet_path, true)
 	if sheet == null:

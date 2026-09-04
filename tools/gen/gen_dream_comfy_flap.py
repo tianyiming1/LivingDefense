@@ -99,16 +99,58 @@ def prepare_ref_1024() -> str:
 	return comfy.stage_file(src, "dream042_flap_ref.png")
 
 
-def make_pose_guides(n: int) -> list[str]:
-	"""Mesh-warp 042_game → upscaled RGB pose images for Canny ControlNet."""
+def make_exaggerated_poses(n: int) -> list[Image.Image]:
+	"""Bigger wing stroke than ship mesh-warp — for Canny guidance only."""
+	from gen_dream_self_flap import wing_anchors, make_flap_frame
+
 	base = fit_to_canvas(Image.open(APPROVED_GAME).convert("RGBA"), 1.0)
-	# build_clip uses N_FLAP; subsample evenly to n
-	full = build_clip(base, lift=10)
-	step = max(1, len(full) // n)
-	picked = [full[(i * step) % len(full)] for i in range(n)]
+	anc = wing_anchors(base)
+	# Monkey-patch angle via reimplemented phases with 1.6x amplitude
+	frames: list[Image.Image] = []
+	for i in range(n):
+		phase = i / float(n)
+		# temporarily boost by calling make_flap_frame then extra tip shift
+		fr = make_flap_frame(base, anc, phase, lift=10)
+		# Extra vertical squash/stretch of upper half (wings) for readable canny delta
+		amp = math.sin(phase * math.tau)
+		out = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+		# split: keep lower body, shift upper band
+		body = fr.crop((0, CH // 2, CW, CH))
+		wings = fr.crop((0, 0, CW, CH // 2 + 8))
+		dy = int(round(-amp * 14))
+		out.alpha_composite(body, (0, CH // 2))
+		out.alpha_composite(wings, (0, max(-20, dy)))
+		frames.append(out)
+	return frames
+
+
+def make_color_pose_refs(n: int) -> list[str]:
+	"""Per-frame COLOR refs with exaggerated wing stroke (not locked 042_raw)."""
+	picked = make_exaggerated_poses(n)
+	# paint onto black 1024 from NEAREST upscale of warped game sprite
 	names: list[str] = []
 	for i, fr in enumerate(picked):
-		# white silhouette on black = strong canny edges for wing outline
+		up = fr.resize((96 * 8, 108 * 8), Image.NEAREST)  # 768x864
+		canvas = Image.new("RGB", (1024, 1024), (0, 0, 0))
+		x = (1024 - up.size[0]) // 2
+		y = (1024 - up.size[1]) // 2
+		canvas.paste(up.convert("RGB"), (x, y), up.split()[-1])
+		path = os.path.join(POSE_DIR, f"color_ref_{i:02d}.png")
+		canvas.save(path)
+		names.append(comfy.stage_file(path, f"dream042_color_{i:02d}.png"))
+	strip = Image.new("RGB", (64 * n, 72), (10, 10, 14))
+	for i, fr in enumerate(picked):
+		s = fr.resize((64, 72), Image.NEAREST).convert("RGB")
+		strip.paste(s, (i * 64, 0))
+	strip.save(os.path.join(POSE_DIR, "COLOR_POSE_CONTACT.png"))
+	return names
+
+
+def make_pose_guides(n: int) -> list[str]:
+	"""Exaggerated silhouette → upscaled RGB for Canny ControlNet."""
+	picked = make_exaggerated_poses(n)
+	names: list[str] = []
+	for i, fr in enumerate(picked):
 		sil = Image.new("RGB", (CW, CH), (0, 0, 0))
 		px = fr.load()
 		sp = sil.load()
@@ -117,12 +159,20 @@ def make_pose_guides(n: int) -> list[str]:
 				r, g, b, a = px[x, y]
 				if a > 40 and r + g + b > 30:
 					sp[x, y] = (240, 240, 240)
-		up = sil.resize((1024, 1024), Image.NEAREST)
-		# slight blur so canny isn't pure pixel stair
-		up = up.filter(ImageFilter.GaussianBlur(radius=1.2))
+		up = sil.resize((768, 864), Image.NEAREST)
+		canvas = Image.new("RGB", (1024, 1024), (0, 0, 0))
+		canvas.paste(up, ((1024 - 768) // 2, (1024 - 864) // 2))
+		canvas = canvas.filter(ImageFilter.GaussianBlur(radius=0.8))
 		path = os.path.join(POSE_DIR, f"pose_{i:02d}.png")
-		up.save(path)
+		canvas.save(path)
 		names.append(comfy.stage_file(path, f"dream042_pose_{i:02d}.png"))
+	strip = Image.new("RGB", (64 * n, 72), (10, 10, 14))
+	for i, fr in enumerate(picked):
+		s = Image.new("RGB", (64, 72), (0, 0, 0))
+		r = fr.resize((64, 72), Image.NEAREST)
+		s.paste(r.convert("RGB"), (0, 0), r.split()[-1] if r.mode == "RGBA" else None)
+		strip.paste(s, (i * 64, 0))
+	strip.save(os.path.join(POSE_DIR, "POSE_CONTACT.png"))
 	return names
 
 
@@ -228,7 +278,7 @@ def process_raws(n: int) -> list[Image.Image]:
 
 
 def expand_to_16(frames8: list[Image.Image]) -> list[Image.Image]:
-	"""Duplicate/lerp-ish by holding neighbors to fill 16 slots for runtime."""
+	"""Hold-frame expand 8→16 (runtime wants up to 16; motion still from keyframes)."""
 	if len(frames8) >= 16:
 		return frames8[:16]
 	out: list[Image.Image] = []
@@ -237,6 +287,32 @@ def expand_to_16(frames8: list[Image.Image]) -> list[Image.Image]:
 		j = min(len(frames8) - 1, int(t))
 		out.append(frames8[j].copy())
 	return out
+
+
+def wing_motion_gate(frames: list[Image.Image]) -> tuple[bool, str]:
+	"""Reject shimmer-only: require wing top Y span across clip."""
+	tops: list[int] = []
+	for fr in frames:
+		px = fr.load()
+		top = CH
+		for y in range(CH):
+			for x in range(CW):
+				r, g, b, a = px[x, y]
+				if a < 40 or r + g + b < 30:
+					continue
+				# wing-ish cool pixels in upper 55%
+				if y > int(CH * 0.55):
+					continue
+				if b >= r + 8 or (r < 120 and b > 70):
+					top = min(top, y)
+		if top < CH:
+			tops.append(top)
+	if len(tops) < max(3, len(frames) // 2):
+		return False, "wing tops not detected"
+	span = max(tops) - min(tops)
+	if span < 8:
+		return False, f"wing motion too weak topY_span={span} (need >=8px) tops={tops}"
+	return True, f"ok wing topY_span={span} tops={tops}"
 
 
 def install_unit(uid: int, fly: list[Image.Image]) -> None:
@@ -365,9 +441,13 @@ def main() -> None:
 	ap = argparse.ArgumentParser()
 	ap.add_argument("--frames", type=int, default=8)
 	ap.add_argument("--units", default="14,15,16,17")
-	ap.add_argument("--denoise", type=float, default=0.42)
-	ap.add_argument("--cn-strength", type=float, default=0.55)
-	ap.add_argument("--steps", type=int, default=24)
+	ap.add_argument("--per-frame-ref", action="store_true", default=True,
+					help="img2img from exaggerated color poses (not locked 042_raw)")
+	ap.add_argument("--lock-raw-ref", action="store_true",
+					help="always use 042_raw as img2img latent (old behavior)")
+	ap.add_argument("--denoise", type=float, default=0.45)
+	ap.add_argument("--cn-strength", type=float, default=0.40)
+	ap.add_argument("--steps", type=int, default=26)
 	ap.add_argument("--seed", type=int, default=42042)
 	ap.add_argument("--skip-gen", action="store_true")
 	ap.add_argument("--no-cn", action="store_true")
@@ -380,11 +460,16 @@ def main() -> None:
 		if not os.path.isfile(APPROVED_GAME):
 			raise SystemExit(f"missing {APPROVED_GAME}")
 		comfy.ensure_comfy()
-		ref_name = prepare_ref_1024()
+		use_lock = args.lock_raw_ref
+		if use_lock:
+			ref_name = prepare_ref_1024()
+			color_refs = [ref_name] * n
+		else:
+			color_refs = make_color_pose_refs(n)
 		poses = make_pose_guides(n)
 		for i in range(n):
 			out = gen_one(
-				ref_name,
+				color_refs[i],
 				poses[i],
 				i,
 				args.seed,
@@ -399,8 +484,9 @@ def main() -> None:
 
 	cells = process_raws(n)
 	ok, msg = gate_frames(cells if len(cells) >= 4 else cells * 2)
-	# gate expects consecutive; for short clips relax via expand check
 	print(f"GATE {'PASS' if ok else 'FAIL'} — {msg}")
+	wok, wmsg = wing_motion_gate(cells)
+	print(f"WING_GATE {'PASS' if wok else 'FAIL'} — {wmsg}")
 	fly16 = expand_to_16(cells)
 	ok16, msg16 = gate_frames(fly16)
 	print(f"GATE16 {'PASS' if ok16 else 'FAIL'} — {msg16}")
@@ -416,6 +502,7 @@ def main() -> None:
 		"cn_strength": args.cn_strength,
 		"gate8": msg,
 		"gate16": msg16,
+		"wing_gate": wmsg,
 		"workbuddy_banned": True,
 	}
 	with open(os.path.join(STUDIO, "NOTE.json"), "w", encoding="utf-8") as f:
@@ -424,6 +511,9 @@ def main() -> None:
 	if args.no_ship:
 		print("skip ship")
 		return
+	if not wok:
+		print("WING_GATE FAIL — not shipping. Inspect studio/comfy_flap/")
+		raise SystemExit(2)
 	if not ok and not ok16:
 		print("GATE FAIL — not shipping. Inspect studio/comfy_flap/")
 		raise SystemExit(2)

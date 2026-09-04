@@ -1,18 +1,13 @@
-"""Dream flap to GIF-quality bar — mesh-warp OUR 042 still (no WorkBuddy pixels).
+"""Dream flap — pivot-rotate OUR 042 still (no WorkBuddy pixels).
 
-Quality bar (eye): WorkBuddy dragon_godot_1_preview.gif motion character
-  — clean silhouette, full up→down→up wing stroke, body bob, NO shred/noise.
+Quality bar: clean silhouette, full up→down→up wing stroke, body bob,
+NO shred / splat 拖影 / 双翅叠影.
 
 Method:
-  - Keep FULL approved sprite solid every frame (never delete wing holes).
-  - Inverse-distance warp of wing-tip control points on a flap sine.
-  - Foot-lock + slight body bob.
+  - Spatial wing mask (lateral upper only; protect white torso / legs / tail).
+  - Erase masked membrane from body, rotate L/R wings about shoulders (NEAREST).
+  - Drop orphan debris blobs; hard contact shadow only.
   - 16 frames @ 125ms; fly_sheet for AtlasTexture.
-
-Gate (auto):
-  - consecutive avg delta >= 800
-  - opaque pixel count stable within 12% of frame0 (anti-shred)
-  - COMPARE strip vs GIF for human eye
 
 Usage:
   python tools/gen/gen_dream_self_flap.py --units 14,15,16,17
@@ -102,196 +97,173 @@ def fit_to_canvas(im: Image.Image, scale: float) -> Image.Image:
 	return out
 
 
-def is_wingish(r: int, g: int, b: int, a: int) -> bool:
-	if a < THR or r + g + b < 30:
-		return False
-	if b >= r + 10 and b >= g - 8:
-		return True
-	if r < 110 and g < 120 and b > 70:
-		return True
-	return False
-
-
-def wing_anchors(full: Image.Image) -> dict:
-	"""Find shoulder + tip anchors for L/R wings from color."""
-	px = full.load()
-	bb = opaque_bbox(full)
-	mid = CW // 2
-	l_pts, r_pts = [], []
-	for y in range(full.size[1]):
-		for x in range(full.size[0]):
+def _drop_orphan_blobs(im: Image.Image, min_keep: int = 18) -> Image.Image:
+	"""Remove tiny disconnected opaque blobs (warp debris / 拖影)."""
+	w, h = im.size
+	px = im.load()
+	seen = [[False] * w for _ in range(h)]
+	comps: list[list[tuple[int, int]]] = []
+	for y in range(h):
+		for x in range(w):
 			r, g, b, a = px[x, y]
-			if not is_wingish(r, g, b, a):
+			if seen[y][x] or a <= THR or r + g + b <= 30:
 				continue
-			if x < mid:
-				l_pts.append((x, y))
-			else:
-				r_pts.append((x, y))
-	# fallback: upper lateral opaque
-	if len(l_pts) < 20 or len(r_pts) < 20:
-		l_pts, r_pts = [], []
-		if bb:
-			x0, y0, x1, y1 = bb
-			cut = y0 + int((y1 - y0) * 0.55)
-			for y in range(y0, cut):
-				for x in range(x0, x1):
-					r, g, b, a = px[x, y]
-					if a < THR or r + g + b < 30:
+			stack = [(x, y)]
+			seen[y][x] = True
+			comp: list[tuple[int, int]] = []
+			while stack:
+				cx, cy = stack.pop()
+				comp.append((cx, cy))
+				for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+					nx, ny = cx + dx, cy + dy
+					if not (0 <= nx < w and 0 <= ny < h) or seen[ny][nx]:
 						continue
-					if abs(x - mid) < max(4, (x1 - x0) // 7):
+					rr, gg, bb, aa = px[nx, ny]
+					if aa <= THR or rr + gg + bb <= 30:
 						continue
-					(l_pts if x < mid else r_pts).append((x, y))
-
-	def tip_and_shoulder(pts, left: bool):
-		if not pts:
-			sx = CW * (0.38 if left else 0.62)
-			return (sx, CH * 0.42), (sx + (-18 if left else 18), CH * 0.22)
-		# tip = farthest from body center
-		cx, cy = CW * 0.5, CH * 0.45
-		tip = max(pts, key=lambda p: (p[0] - cx) ** 2 + (p[1] - cy) ** 2)
-		# shoulder = closest to center among upper half
-		upper = [p for p in pts if p[1] < cy + 8] or pts
-		shoulder = min(upper, key=lambda p: (p[0] - cx) ** 2 + (p[1] - cy) ** 2)
-		return (float(shoulder[0]), float(shoulder[1])), (float(tip[0]), float(tip[1]))
-
-	ls, lt = tip_and_shoulder(l_pts, True)
-	rs, rt = tip_and_shoulder(r_pts, False)
-	return {"l_s": ls, "l_t": lt, "r_s": rs, "r_t": rt}
+					seen[ny][nx] = True
+					stack.append((nx, ny))
+			comps.append(comp)
+	if not comps:
+		return im
+	comps.sort(key=len, reverse=True)
+	for c in comps[1:]:
+		if len(c) < min_keep:
+			for x, y in c:
+				px[x, y] = (0, 0, 0, 0)
+	return im
 
 
-def rotate_point(px: float, py: float, ox: float, oy: float, ang: float) -> tuple[float, float]:
-	c, s = math.cos(ang), math.sin(ang)
-	dx, dy = px - ox, py - oy
-	return ox + dx * c - dy * s, oy + dx * s + dy * c
-
-
-def mesh_warp_wing_region(
-	src: Image.Image,
-	src_ctrls: list[tuple[float, float]],
-	dst_ctrls: list[tuple[float, float]],
-	power: float = 1.55,
-) -> Image.Image:
-	"""Forward-warp wings onto solid body; splat 2×2 to avoid holes (anti-shred)."""
-	out = src.copy()
-	sp, op = src.load(), out.load()
-	w, h = src.size
-	n = len(src_ctrls)
-	wing = [[False] * w for _ in range(h)]
-	for y in range(h):
-		for x in range(w):
-			if is_wingish(*sp[x, y]):
-				wing[y][x] = True
-	# erase wing membranes (keep non-wing body intact)
-	for y in range(h):
-		for x in range(w):
-			if wing[y][x]:
-				op[x, y] = (0, 0, 0, 0)
-
-	def map_point(x: float, y: float) -> tuple[float, float]:
-		numx = numy = den = 0.0
-		for i in range(n):
-			dx = x - src_ctrls[i][0]
-			dy = y - src_ctrls[i][1]
-			d2 = dx * dx + dy * dy
-			if d2 < 0.25:
-				return dst_ctrls[i][0], dst_ctrls[i][1]
-			wt = 1.0 / (d2 ** (power * 0.5))
-			numx += wt * (x + (dst_ctrls[i][0] - src_ctrls[i][0]))
-			numy += wt * (y + (dst_ctrls[i][1] - src_ctrls[i][1]))
-			den += wt
-		if den <= 1e-9:
-			return x, y
-		return numx / den, numy / den
-
-	# splat wing pixels
-	for y in range(h):
-		for x in range(w):
-			if not wing[y][x]:
+def _spatial_wing_mask(full: Image.Image) -> list[list[bool]]:
+	"""Lateral upper wing only — never white torso / legs / tail (anti-叠影 erase)."""
+	px = full.load()
+	bb = opaque_bbox(full) or (10, 10, CW - 10, CH - 10)
+	x0, y0, x1, y1 = bb
+	mid = (x0 + x1) // 2
+	cut_y = y0 + int((y1 - y0) * 0.64)
+	band = max(5, (x1 - x0) // 6)
+	mask = [[False] * CW for _ in range(CH)]
+	for y in range(y0, min(cut_y + 1, CH)):
+		for x in range(x0, x1):
+			if abs(x - mid) < band:
 				continue
-			col = sp[x, y]
-			if col[3] < THR:
+			r, g, b, a = px[x, y]
+			if a < THR or r + g + b < 30:
 				continue
-			dx, dy = map_point(float(x), float(y))
-			ix, iy = int(round(dx)), int(round(dy))
-			for oy in (0, 1):
-				for ox in (0, 1):
-					px, py = ix + ox, iy + oy
-					if 0 <= px < w and 0 <= py < h:
-						br, bg, bb, ba = op[px, py]
-						# don't paint over solid non-wing torso
-						if ba > THR and not is_wingish(br, bg, bb, ba):
-							continue
-						op[px, py] = col
-
-	# fill remaining holes inside original wing bbox: sample nearest painted wing
-	bb = opaque_bbox(src)
-	if bb:
-		# one pass: if transparent where original was wing, copy from nearby painted
-		for y in range(bb[1], bb[3]):
-			for x in range(bb[0], bb[2]):
-				if op[x, y][3] >= THR:
-					continue
-				if not wing[y][x]:
-					continue
-				# search radius 3
-				found = None
-				for r in range(1, 4):
-					for dy in range(-r, r + 1):
-						for dx in range(-r, r + 1):
-							nx, ny = x + dx, y + dy
-							if 0 <= nx < w and 0 <= ny < h and is_wingish(*op[nx, ny]):
-								found = op[nx, ny]
-								break
-						if found:
-							break
-					if found:
-						break
-				if found:
-					op[x, y] = found
+			lum = r + g + b
+			if lum > 500:  # white body core
+				continue
+			wingish = (
+				(b >= r + 6 and b >= g - 14)
+				or (r < 130 and g < 140 and b > 60)
+				or (b > r and b > g and lum < 460)
+			)
+			if wingish:
+				mask[y][x] = True
+	# Dilate 2 into non-torso (clear residual membrane that causes 叠影拖影)
+	out = [row[:] for row in mask]
+	for y in range(CH):
+		for x in range(CW):
+			if not mask[y][x]:
+				continue
+			for dy in range(-2, 3):
+				for dx in range(-2, 3):
+					nx, ny = x + dx, y + dy
+					if not (0 <= nx < CW and 0 <= ny < CH):
+						continue
+					if abs(nx - mid) < max(3, band - 2):
+						rr, gg, bb, aa = px[nx, ny]
+						if aa > THR and rr + gg + bb > 480:
+							continue  # protect white torso
+					if ny > cut_y + 3:
+						continue
+					out[ny][nx] = True
 	return out
 
 
-def make_flap_frame(base: Image.Image, anchors: dict, phase: float, lift: int) -> Image.Image:
-	"""phase 0..1 complete flap. Warp wing tips; body copy stays intact."""
-	ang = math.sin(phase * math.tau) * 0.85  # ~49°
-	bob = -math.sin(phase * math.tau) * 2.5
-
-	ls, lt = anchors["l_s"], anchors["l_t"]
-	rs, rt = anchors["r_s"], anchors["r_t"]
+def prepare_wing_rig(base: Image.Image) -> dict:
+	"""Split body / L wing / R wing once; shoulders for pivot rotate."""
+	px = base.load()
+	mask = _spatial_wing_mask(base)
+	body = base.copy()
+	bp = body.load()
+	left = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+	right = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+	lp, rp = left.load(), right.load()
 	bb = opaque_bbox(base) or (20, 20, 76, 100)
-	head = ((bb[0] + bb[2]) * 0.5, bb[1] + 6.0)
-	foot_pt = ((bb[0] + bb[2]) * 0.5, float(bb[3] - 2))
-	chest = ((bb[0] + bb[2]) * 0.5, (bb[1] + bb[3]) * 0.45)
+	mid = (bb[0] + bb[2]) // 2
+	l_pts: list[tuple[int, int]] = []
+	r_pts: list[tuple[int, int]] = []
+	for y in range(CH):
+		for x in range(CW):
+			if not mask[y][x]:
+				continue
+			col = px[x, y]
+			bp[x, y] = (0, 0, 0, 0)
+			if x < mid:
+				lp[x, y] = col
+				l_pts.append((x, y))
+			else:
+				rp[x, y] = col
+				r_pts.append((x, y))
 
-	out_push = 5.0 * max(0.0, -math.sin(phase * math.tau))
-	lt2 = rotate_point(lt[0], lt[1], ls[0], ls[1], -ang)
-	rt2 = rotate_point(rt[0], rt[1], rs[0], rs[1], ang)
-	lt2 = (lt2[0] - out_push, lt2[1] + abs(ang) * 2)
-	rt2 = (rt2[0] + out_push, rt2[1] + abs(ang) * 2)
+	def shoulder(pts: list[tuple[int, int]]) -> tuple[float, float]:
+		if not pts:
+			return float(mid), float(CH * 0.42)
+		cx, cy = CW * 0.5, CH * 0.42
+		upper = [p for p in pts if p[1] < cy + 12] or pts
+		s = min(upper, key=lambda p: (p[0] - cx) ** 2 + (p[1] - cy) ** 2)
+		return float(s[0]), float(s[1])
 
-	lm = ((ls[0] + lt[0]) * 0.55, (ls[1] + lt[1]) * 0.55)
-	rm = ((rs[0] + rt[0]) * 0.55, (rs[1] + rt[1]) * 0.55)
-	lm2 = rotate_point(lm[0], lm[1], ls[0], ls[1], -ang * 0.6)
-	rm2 = rotate_point(rm[0], rm[1], rs[0], rs[1], ang * 0.6)
+	return {
+		"body": body,
+		"left": left,
+		"right": right,
+		"l_s": shoulder(l_pts),
+		"r_s": shoulder(r_pts),
+		"n_l": len(l_pts),
+		"n_r": len(r_pts),
+	}
 
-	# Only wing controls move; body controls identical (no body mesh tear)
-	src_c = [ls, lt, lm, rs, rt, rm, head, chest, foot_pt]
-	dst_c = [ls, lt2, lm2, rs, rt2, rm2, head, chest, foot_pt]
-	warped = mesh_warp_wing_region(base, src_c, dst_c)
 
-	# whole-sprite bob via foot-lock shift
+def _rotate_around(layer: Image.Image, pivot: tuple[float, float], deg: float) -> Image.Image:
+	big = Image.new("RGBA", (CW * 3, CH * 3), (0, 0, 0, 0))
+	big.alpha_composite(layer, (CW, CH))
+	rot = big.rotate(deg, resample=Image.NEAREST, center=(pivot[0] + CW, pivot[1] + CH))
+	return rot.crop((CW, CH, CW * 2, CH * 2))
+
+
+def make_flap_frame(rig: dict, phase: float, lift: int) -> Image.Image:
+	"""phase 0..1: pivot-rotate L/R wings (hard nearest, no mesh splat 拖影)."""
+	ang_deg = math.sin(phase * math.tau) * 26.0  # ~±26°
+	bob = -math.sin(phase * math.tau) * 1.5
+	lw = _rotate_around(rig["left"], rig["l_s"], -ang_deg)
+	rw = _rotate_around(rig["right"], rig["r_s"], ang_deg)
+	warped = rig["body"].copy()
+	warped.alpha_composite(lw)
+	warped.alpha_composite(rw)
+	warped = _drop_orphan_blobs(warped, min_keep=20)
+
 	bb2 = opaque_bbox(warped)
 	out = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+	# No soft under-body smear — tiny hard contact shadow only
 	d = ImageDraw.Draw(out)
-	sw = 20 if lift < 12 else 12
-	d.ellipse((CW // 2 - sw // 2, FOOT + 1, CW // 2 + sw // 2, FOOT + 5), fill=(20, 20, 30, 100))
+	sw = 14 if lift < 12 else 8
+	d.ellipse((CW // 2 - sw // 2, FOOT + 2, CW // 2 + sw // 2, FOOT + 4), fill=(16, 16, 22, 180))
 	if not bb2:
 		return out
 	dy = (FOOT - lift) - (bb2[3] - 1) + int(round(bob))
 	tmp = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
 	tmp.alpha_composite(warped, (0, dy))
 	out.alpha_composite(tmp)
-	return out
+	return _drop_orphan_blobs(out, min_keep=12)
+
+
+def build_clip(base: Image.Image, lift: int) -> list[Image.Image]:
+	rig = prepare_wing_rig(base)
+	if rig["n_l"] < 30 or rig["n_r"] < 30:
+		raise RuntimeError(f"wing mask too small L={rig['n_l']} R={rig['n_r']}")
+	return [make_flap_frame(rig, i / float(N_FLAP), lift) for i in range(N_FLAP)]
 
 
 def px_changed(a: Image.Image, b: Image.Image) -> int:
@@ -321,23 +293,20 @@ def clear_anim(folder: str) -> None:
 			os.remove(os.path.join(folder, n))
 
 
-def build_clip(base: Image.Image, lift: int) -> list[Image.Image]:
-	anc = wing_anchors(base)
-	return [make_flap_frame(base, anc, i / float(N_FLAP), lift) for i in range(N_FLAP)]
-
-
 def gate_frames(frames: list[Image.Image]) -> tuple[bool, str]:
 	n0 = opaque_count(frames[0])
 	if n0 < 200:
 		return False, "too empty"
 	deltas = [px_changed(frames[i], frames[i + 1]) for i in range(len(frames) - 1)]
 	avg = sum(deltas) / max(1, len(deltas))
-	# anti-shred: opaque count stable (allow wing fold variance)
+	# anti-shred: forbid big *loss*; mild gain OK (wing unfold). Big gain = smear/拖影.
 	for i, fr in enumerate(frames):
 		ni = opaque_count(fr)
-		if abs(ni - n0) / float(n0) > 0.22:
-			return False, f"shred/opaque drift frame{i}: {ni} vs {n0}"
-	if avg < 400:
+		if ni < n0 * 0.72:
+			return False, f"shred/opaque loss frame{i}: {ni} vs {n0}"
+		if ni > n0 * 1.38:
+			return False, f"smear/opaque inflate frame{i}: {ni} vs {n0}"
+	if avg < 220:
 		return False, f"motion too weak avg_delta={avg:.0f}"
 	return True, f"ok avg_delta={avg:.0f} opaque0={n0}"
 
@@ -381,14 +350,14 @@ def install_unit(uid: int) -> list[Image.Image]:
 		with open(meta_p, encoding="utf-8") as f:
 			meta = json.load(f)
 		meta["prefer_frames"] = True
-		meta["fly_source"] = "self_mesh_warp_042"
+		meta["fly_source"] = "self_pivot_rotate_042"
 		meta["fly_frames"] = N_FLAP
 		meta["fly_sheet"] = True
 		meta["complete_action"] = True
 		meta.pop("reject", None)
 		with open(meta_p, "w", encoding="utf-8") as f:
 			json.dump(meta, f, indent=2)
-	print(f"unit_{uid}: installed mesh-warp COMPLETE {N_FLAP}f")
+	print(f"unit_{uid}: installed pivot-rotate COMPLETE {N_FLAP}f")
 	return fly
 
 
@@ -405,7 +374,7 @@ def write_preview_and_compare(unit17: list[Image.Image]) -> None:
 	cell = 60
 	strip = Image.new("RGB", (cell * N_FLAP, cell + 24), (16, 16, 22))
 	dr = ImageDraw.Draw(strip)
-	dr.text((4, 2), f"SELF mesh-warp {N_FLAP}f (GIF quality target)", fill=(120, 255, 140))
+	dr.text((4, 2), f"SELF pivot-rotate {N_FLAP}f (no splat trail)", fill=(120, 255, 140))
 	for i, fr in enumerate(unit17):
 		bg = Image.new("RGBA", (cell, cell), (0, 0, 0, 255))
 		s = fr.resize((cell, int(cell * CH / CW)), Image.NEAREST)
@@ -423,7 +392,7 @@ def write_preview_and_compare(unit17: list[Image.Image]) -> None:
 		cmp = Image.new("RGB", (96 * 8, 96 * 2 + 36), (12, 12, 18))
 		dr = ImageDraw.Draw(cmp)
 		dr.text((4, 2), "GIF ref (quality bar — not shipped)", fill=(120, 255, 140))
-		dr.text((4, 110), "SELF mesh-warp (ship)", fill=(255, 200, 80))
+		dr.text((4, 110), "SELF pivot-rotate (ship)", fill=(255, 200, 80))
 		for i in range(8):
 			gg = Image.new("RGBA", (96, 96), (0, 0, 0, 255))
 			gg.alpha_composite(gfr[i], (0, -6))

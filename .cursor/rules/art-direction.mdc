@@ -47,6 +47,11 @@ AI 直出 ≠ 游戏精灵。走项目管线：
 4. **逐帧比对**：新帧与锚帧并排核对——整体轮廓、头部/躯干比例、色板、描边粗细必须一致才算过；不一致 → 回第 2 步用同词重出，**禁止"微调描述碰运气"**
 5. **转像素对齐**：统一走 `python tools/gen/import_ai_sprite.py --id <race>/<unit> --retro` 逐帧转换；锚点（脚底中心）必须对齐，否则进引擎播放会跳
 6. **引擎验收**：帧集齐后在 Godot 用 SpriteFrames/AnimationPlayer 实际播放，肉眼无跳变才可交付；个别残帧用 Aseprite 按网格+色板重绘修正，不整批重跑
+7. **强制过审（不过审的不能要）**：契约与审核标准 = `docs/动画_素材契约与审核_v1.md`。帧包落盘后必须跑
+   ```bash
+   python tools/gen/audit_anim_pack.py --race <race> --unit <id>
+   ```
+   PASS → 工具自动写 `REVIEW.json(status=approved)`；**引擎只播放 approved 包**（`UnitSprites.load_anim_frames` 门禁）。FAIL → 按 reasons 返工，禁止"先入库再说"。自定义色板（如梦龙）在包目录放 `palette.json {"colors":[[r,g,b],...]}` 覆盖种族默认色板；历史 baseline_v1 包会被保护不被误覆写（`--force` 可强制）。
 
 ## 五、验收关（交付前必过）
 - [ ] 色板符合该种族（对照 PALETTES）
@@ -55,6 +60,7 @@ AI 直出 ≠ 游戏精灵。走项目管线：
 - [ ] 无破损部位（手指/翅膀/五官没糊）
 - [ ] 尺寸/透明/描边正确，Godot 里预览正常
 - [ ] 多帧任务：帧间轮廓/色板/描边一致、Godot 播放无跳动（对照锚帧）
+- [ ] 帧包过审：`audit_anim_pack.py` PASS 且 `REVIEW.json status=approved` 已写入（未过审不得交付）
 - 不过关 → 回到"二、风格锁定"迭代源图，禁止"多跑几张碰运气"
 
 ## 六、记录
